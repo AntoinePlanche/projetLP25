@@ -25,7 +25,7 @@ typedef ligne *mastermind; // je sais pas trop à quoi ca peut servir pour l'ins
 typedef struct joueur
 {
     char *nom;
-    Couleur *pion;
+    Couleur *pions;
     int score;
 } joueur;
 
