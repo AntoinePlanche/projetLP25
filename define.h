@@ -45,7 +45,7 @@ Je vois plus les choses comme ca perso
 
 void playerInput(joueur *joueur); //Cette fonction permet de prendre en comtpe les interactions avec le joueur et d'assigner dynamique le tableau de point dans la champ ligne.
 
-bool checkLigneContent(Couleur* targetLigne, ligne* input, int lengthLine); // Cette fonction permet de verifier si le joueur a trouvé ou non la bonne combinaison. Elle retournera un boolean en fonction de la reussite ou non.
+bool checkLineContent(Couleur* targetLigne, ligne* input, int lengthLine); // Cette fonction permet de verifier si le joueur a trouvé ou non la bonne combinaison. Elle retournera un boolean en fonction de la reussite ou non.
 
 //void createGameFile(joueur &joueur); // Cette fonction a pour but de créer un fichier ayant pour nom le nom du joueur et de son adversaire si le fichier existe deja nous demandons au joueur de donner un nom au fichier
 
