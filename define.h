@@ -33,6 +33,9 @@ typedef struct joueur
     int score;
 } joueur;
 
+extern int nombreColonne;
+extern int nombreEssais;
+
 /**
  * @brief Cette fonction permet de prendre en comtpe les interactions avec le joueur et d'assigner dynamique le tableau de point dans la champ ligne.
  * 
