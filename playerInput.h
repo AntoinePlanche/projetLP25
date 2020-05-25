@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "define.h"
+#include <ctype.h>
 
 #define NUM_COLOR 4 // Nombre de colonne dans le jeu
 
