@@ -1,5 +1,8 @@
 #include "playerInput.h"
 
+int nombreEssais = 0;
+int nombreColonne = 0;
+
 /**
  * @brief Cette fonction permet de remplir la ligne du joueur 
  * 
@@ -9,7 +12,7 @@ void playerInput(joueur *joueur)
 {
     ligne choix;
 
-    choix.pion = malloc(NUM_COLOR * sizeof(Couleur));
+    choix.pion = malloc(nombreColonne * sizeof(Couleur));
 
     if (choix.pion != NULL)
     {
@@ -28,7 +31,7 @@ void playerInput(joueur *joueur)
             printf("A quelle position souhaitez modifier la couleur ? Position : ");
             scanf("%d", &position);
 
-            if (position <= NUM_COLOR)
+            if (position <= nombreColonne)
             {
                 printf("Quelle couleur souhaitez vous donner à cette case ? Couleur : ");
                 scanf("%s", color);
@@ -59,7 +62,7 @@ void playerInput(joueur *joueur)
             printf("A quelle position souhaitez modifier la couleur ? Position : ");
             scanf(" %d", &position);
 
-            if (position <= NUM_COLOR)
+            if (position <= nombreColonne)
             {
                 printf("Quelle couleur souhaitez vous donner à cette case ? Couleur : ");
                 scanf(" %s", color);
@@ -78,6 +81,114 @@ void playerInput(joueur *joueur)
         }
 
         joueur->proposition->pion = choix.pion;
+    }
+    else
+    {
+        printf("Erreur d'allocation mémoire\n");
+    }
+}
+
+void combinaisonInput(Couleur *combinaison)
+{
+    ligne choix;
+    numberColorChoice();
+
+    choix.pion = malloc(nombreColonne * sizeof(Couleur));
+
+    if (choix.pion != NULL)
+    {
+        if (modeChoice())
+        {
+            initalizePion(&choix);
+
+            while (!isFull(&choix))
+            {
+                system("clear");
+                printf("                ***** CHOIX DE LA COMBINAISON SECRETE *****\n\n");
+                printf("Choix de couleur : ROUGE, JAUNE, BLEU, ORANGE, VERT, BLANC, VIOLET, ROSE\n");
+
+                int position = 0;
+                char *color;
+                displayChoice(&choix);
+
+                printf("A quelle position souhaitez modifier la couleur ? Position : ");
+                scanf("%d", &position);
+
+                if (position <= nombreColonne)
+                {
+                    printf("Quelle couleur souhaitez vous donner à cette case ? Couleur : ");
+                    scanf("%s", color);
+
+                    fillChoixWithColor(&choix, position, color);
+                }
+                else
+                {
+                    printf("Cette position n'existe pas\n");
+                }
+            }
+
+            char playerAnswer;
+            printf("Validez vous cette proposition (o/n) ");
+            scanf(" %c", &playerAnswer);
+            while (playerAnswer != 'o' && playerAnswer != 'O' && playerAnswer != 'n' && playerAnswer != 'N')
+            {
+                printf("Votre reponse doit etre (o/n)\n");
+                scanf(" %c", &playerAnswer);
+            }
+
+            while (playerAnswer == 'N' || playerAnswer == 'n')
+            {
+                printf("\nhello\n");
+                int position = 0;
+                char *color;
+
+                printf("A quelle position souhaitez modifier la couleur ? Position : ");
+                scanf(" %d", &position);
+
+                if (position <= nombreColonne)
+                {
+                    printf("Quelle couleur souhaitez vous donner à cette case ? Couleur : ");
+                    scanf(" %s", color);
+
+                    fillChoixWithColor(&choix, position, color);
+                }
+                else
+                {
+                    printf("Cette position n'existe pas\n");
+                }
+
+                displayChoice(&choix);
+
+                printf("Validez vous cette proposition (o/n) ");
+                scanf(" %c", &playerAnswer);
+            }
+
+            combinaison = choix.pion;
+
+            //TODO save the combinaison in the log file
+        }
+
+        else
+        {
+            for (int i = 0; i < nombreColonne; i++)
+            {
+                Couleur randomColor = (Couleur)rand() % 8;
+
+                while (randomColor == NONE)
+                {
+                    randomColor = (Couleur)rand() % 8;
+                }
+
+                choix.pion[i] = randomColor;
+            }
+
+            //TODO remove after testing
+            displayChoice(&choix);
+
+            combinaison = choix.pion;
+
+            //TODO save the combinaison in the log file
+        }
     }
     else
     {
@@ -163,7 +274,7 @@ char *charPointerToUpperCase(char *name)
 bool isFull(ligne *choix)
 {
     bool indiceFull = true;
-    for (int i = 0; i < NUM_COLOR; i++)
+    for (int i = 0; i < nombreColonne; i++)
     {
         if (choix->pion[i] == NONE)
             indiceFull = false;
@@ -179,7 +290,7 @@ bool isFull(ligne *choix)
  */
 void initalizePion(ligne *choix)
 {
-    for (int i = 0; i < NUM_COLOR; i++)
+    for (int i = 0; i < nombreColonne; i++)
     {
         choix->pion[i] = NONE;
     }
@@ -193,7 +304,7 @@ void initalizePion(ligne *choix)
 void displayChoice(ligne *proposition)
 {
     printf("|");
-    for (int i = 0; i < NUM_COLOR; i++)
+    for (int i = 0; i < nombreColonne; i++)
     {
         switch (proposition->pion[i])
         {
@@ -239,7 +350,7 @@ void displayChoice(ligne *proposition)
 void displayPlayerChoice(joueur *joueur)
 {
     printf("|");
-    for (int i = 0; i < NUM_COLOR; i++)
+    for (int i = 0; i < nombreColonne; i++)
     {
         switch (joueur->proposition->pion[i])
         {
@@ -276,6 +387,77 @@ void displayPlayerChoice(joueur *joueur)
     printf("\n");
 }
 
+/**
+ * @brief Cette fonction permet de connaitre le mode de jeu choisi par le joueur 
+ * 
+ * @return true si le JoueurVSJoueur 
+ * @return false si JoueurVSOrdinateur
+ */
+bool modeChoice()
+{
+    printf("Mode de jeu :\n");
+    printf("    1 - Mode Joueur Vs Joueur\n");
+    printf("    2 - Mode Joueur Vs Ordinateur\n");
+
+    int playerAnswer;
+
+    do
+    {
+        printf("Choix = ");
+        scanf(" %d", &playerAnswer);
+    } while (playerAnswer != 1 && playerAnswer != 2);
+
+    if (playerAnswer == 1)
+    {
+        printf("Vous avez choisi le mode Joueur Vs Joueur\n");
+        return true;
+    }
+    else
+    {
+        printf("Vous avez choisi le mode Joueur Vs Ordinateur\n");
+        return false;
+    }
+}
+
+/**
+ * @brief Cette fonction permet d'initaliser le nombre de colonne dans le jeu
+ * 
+ */
+void numberColorChoice()
+{
+    printf("Combien de colonne de couleur souhaitez-vous utiliser (version officiel -> 4 colonnes\n");
+
+    do
+    {
+        printf("Choix = ");
+        scanf(" %d", &nombreColonne);
+    } while (nombreColonne < 0);
+
+    printf("Est ce que %d colonnes vous convient ? (o/n)\n", nombreColonne);
+    char playerAnswer;
+
+    do
+    {
+        scanf(" %c", &playerAnswer);
+    } while (playerAnswer != 'o' && playerAnswer != 'O' && playerAnswer != 'n' && playerAnswer != 'N');
+
+    while (playerAnswer == 'n' || playerAnswer == 'N')
+    {
+        do
+        {
+            printf("Choix = ");
+            scanf(" %d", &nombreColonne);
+        } while (nombreColonne < 0);
+
+        printf("Est ce que %d colonnes vous convient ? (o/n)\n", nombreColonne);
+
+        do
+        {
+            scanf(" %c", &playerAnswer);
+        } while (playerAnswer != 'o' && playerAnswer != 'O' && playerAnswer != 'n' && playerAnswer != 'N');
+    }
+}
+
 int main(void)
 {
     joueur thomas;
@@ -283,5 +465,9 @@ int main(void)
     thomas.nom = "Test";
     thomas.score = 0;
 
-    playerInput(&thomas);
+    Couleur combinaison;
+
+    combinaisonInput(&combinaison);
+
+    //playerInput(&thomas);
 }

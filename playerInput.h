@@ -6,8 +6,6 @@
 #include "define.h"
 #include <ctype.h>
 
-#define NUM_COLOR 4 // Nombre de colonne dans le jeu
-
 /**
  * @brief Cette fonction permet d'afficher le choix du joueur au fur et à mesure que celui-ci rempli la ligne 
  * 
@@ -55,5 +53,19 @@ char *charPointerToUpperCase(char *name);
  * @param joueur 
  */
 void displayPlayerChoice(joueur *joueur);
+
+/**
+ * @brief Cette fonction permet de connaitre le mode de jeu choisi par le joueur 
+ * 
+ * @return true si le JoueurVSJoueur 
+ * @return false si JoueurVSOrdinateur
+ */
+bool modeChoice();
+
+/**
+ * @brief Cette fonction permet d'initaliser le nombre de colonne dans le jeu
+ * 
+ */
+void numberColorChoice();
 
 #endif
