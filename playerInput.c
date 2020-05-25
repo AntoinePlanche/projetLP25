@@ -420,6 +420,20 @@ bool modeChoice()
 }
 
 /**
+ * @brief Cette fonction permet de determiner le nombre d'essais pour le jeu 
+ * 
+ */
+void essaisNumberChoice()
+{
+    printf(" ==== NOMBRE D'ESSAIS ==== :\n");
+    do
+    {
+        printf("Choix = ");
+        scanf(" %d", &nombreEssais);
+    } while (nombreEssais < 0);
+}
+
+/**
  * @brief Cette fonction permet d'initaliser le nombre de colonne dans le jeu
  * 
  */

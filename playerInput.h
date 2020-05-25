@@ -68,4 +68,10 @@ bool modeChoice();
  */
 void numberColorChoice();
 
+/**
+ * @brief Cette fonction permet de determiner le nombre d'essais pour le jeu 
+ * 
+ */
+void essaisNumberChoice();
+
 #endif
