@@ -23,7 +23,7 @@ typedef struct ligne
     int nbrBonneCouleurMauvaisEndroit;
 } ligne;
 
-typedef ligne *mastermind; // je sais pas trop à quoi ca peut servir pour l'instant mais on sait jamais
+typedef ligne* mastermind; // je sais pas trop à quoi ca peut servir pour l'instant mais on sait jamais
 
 typedef struct joueur
 {
@@ -32,15 +32,32 @@ typedef struct joueur
     int score;
 } joueur;
 
+/*
+typedef struct joueur
+{
+    char *nom;
+    masterming proposition;
+    int score;
+} joueur;
+
+Je vois plus les choses comme ca perso
+*/
+
 void playerInput(joueur *joueur); //Cette fonction permet de prendre en comtpe les interactions avec le joueur et d'assigner dynamique le tableau de point dans la champ ligne.
 
-bool checkLigneContent(ligne &objectif, joueur *joueur); // Cette fonction permet de verifier si le joueur a trouvé ou non la bonne combinaison. Elle retournera un boolean en fonction de la reussite ou non.
+bool checkLigneContent(Couleur* targetLigne, ligne* input, int lengthLine); // Cette fonction permet de verifier si le joueur a trouvé ou non la bonne combinaison. Elle retournera un boolean en fonction de la reussite ou non.
 
-void createGameFile(joueur &joueur); // Cette fonciton a pour but de créer un fichier ayant pour nom le nom du joueur et de son adversaire si le fichier existe deja nous demandons au joueur de donner un nom au fichier
+//void createGameFile(joueur &joueur); // Cette fonction a pour but de créer un fichier ayant pour nom le nom du joueur et de son adversaire si le fichier existe deja nous demandons au joueur de donner un nom au fichier
 
-void addLigneToFile(ligne &proposition); // Cette fonction a pour but d'ajouter au fichier crée préalablement la ligne que vient de rentrer le joueur ainsi que les nbrBonneCouleurBonEndroit et nbrBonneCouleurMauvaisEndroit.
+void createGameFile(joueur *joueur);
 
-string findFileName(); // Cette fonction a pour objectif de retrouver le nom du fichier dans le dossier Previous-Game.
+//void addLigneToFile(ligne &proposition); // Cette fonction a pour but d'ajouter au fichier crée préalablement la ligne que vient de rentrer le joueur ainsi que les nbrBonneCouleurBonEndroit et nbrBonneCouleurMauvaisEndroit.
+
+void addLigneToFile(ligne *proposition);
+
+//string findFileName(); // Cette fonction a pour objectif de retrouver le nom du fichier dans le dossier Previous-Game.
+
+char* findFileName();
 
 void createGameFromFile(); // Cette fonction a pour objectif de creer une nouvelle ligne objectif et d'afficher les anciennes decisions qui ont été prises par le joueur afin qu'il se retrouve dans le jeu.
 
