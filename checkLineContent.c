@@ -3,45 +3,35 @@
 #include <stdbool.h>
 #include "define.h"
 
-
-bool checkLineContent(Couleur* targetLigne, ligne* input, int lengthLine)
+bool checkLineContent(Couleur *targetLigne, ligne *input, int lengthLine)
 {
 
     input->nbrBonneCouleurBonEndroit = 0;
     input->nbrBonneCouleurMauvaisEndroit = 0;
 
-    for(int i = 0; i<lengthLine; i++)
+    for (int i = 0; i < lengthLine; i++)
     {
-
-        if(targetLigne[i] == input->pion[i])
+        printf("target = %d", targetLigne[i]);
+        printf("player = %d", input->pion[i]);
+        if (targetLigne[i] == input->pion[i])
         {
-
             input->nbrBonneCouleurBonEndroit++;
-
         }
 
-        for(int j = 0; j<lengthLine; j++)
+        for (int j = 0; j < lengthLine; j++)
         {
-
-            if(input->pion[j] == targetLigne[i] && i != j)
+            if (input->pion[j] == targetLigne[i] && i != j)
             {
-
                 input->nbrBonneCouleurMauvaisEndroit++;
-
             }
-
-
         }
-
     }
 
-    if(input->nbrBonneCouleurBonEndroit == lengthLine)
+    if (input->nbrBonneCouleurBonEndroit == lengthLine)
     {
 
         return true;
-
     }
 
     return false;
-
 }
