@@ -14,6 +14,9 @@ void playerInput(joueur *joueur, Couleur *combinaison)
 
     choix.pion = malloc(nombreColonne * sizeof(Couleur));
 
+    //debug line
+    displayChoice(combinaison);
+
     if (choix.pion != NULL)
     {
         initalizePion(&choix);
@@ -195,7 +198,7 @@ void combinaisonInput(Couleur *combinaison)
         }
 
         //TODO remove after testing
-        displayChoice(choix.pion);
+        displayChoice(combinaison);
     }
     else
     {
