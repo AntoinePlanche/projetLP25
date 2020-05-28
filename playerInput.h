@@ -7,11 +7,19 @@
 #include <ctype.h>
 
 /**
+ * @brief Cette fonction permet au joueur de proposer une nouvelle ligne 
+ * 
+ * @param joueur 
+ * @param combinaison 
+ */
+void playerInput(joueur *joueur, Couleur *combinaison);
+
+/**
  * @brief Cette fonction permet d'afficher le choix du joueur au fur et à mesure que celui-ci rempli la ligne 
  * 
  * @param proposition 
  */
-void displayChoice(ligne *proposition);
+void displayChoice(Couleur *proposition);
 
 /**
  * @brief 
@@ -36,7 +44,7 @@ bool isFull(ligne *choix);
  * @param index index de la position de la couleur choisie
  * @param colorName chaine de caractere representant la couleur 
  */
-void fillChoixWithColor(ligne *choix, int index, char *colorName);
+void fillChoixWithColor(Couleur *choix, int index, char *colorName);
 
 /**
  * @brief Cette fonction permet de convertir la couleur donnée par l'utilisateur en majuscule afin d'eviter les malentendus 
@@ -73,5 +81,12 @@ void numberColorChoice();
  * 
  */
 void essaisNumberChoice();
+
+/**
+ * @brief Cette fonction permet de donner rentrer la combiniason secrete qui sera utilisée pour le jeu
+ * 
+ * @param combinaison 
+ */
+void combinaisonInput(Couleur *combinaison);
 
 #endif
