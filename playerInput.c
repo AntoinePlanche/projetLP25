@@ -1,12 +1,13 @@
 #include "playerInput.h"
+#define LENGTHCOLOR 10
 
 int nombreEssais = 0;
 int nombreColonne = 0;
 
 /**
- * @brief Cette fonction permet de remplir la ligne du joueur 
- * 
- * @param joueur 
+ * @brief Cette fonction permet de remplir la ligne du joueur
+ *
+ * @param joueur
  */
 void playerInput(joueur *joueur, Couleur *combinaison)
 {
@@ -19,10 +20,9 @@ void playerInput(joueur *joueur, Couleur *combinaison)
 
     if (choix.pion != NULL)
     {
-        initalizePion(&choix);
-
-        char *color;
-        while (!isFull(&choix))
+        initalizePion(choix.pion);
+        char* color = malloc(sizeof(char)*LENGTHCOLOR);
+        while (!isFull(choix.pion))
         {
             //system("clear");
             printf("                ***** Au tour de %s *****\n\n", joueur->nom);
@@ -61,7 +61,6 @@ void playerInput(joueur *joueur, Couleur *combinaison)
         {
             printf("\nhello\n");
             int position = 0;
-            char *color;
 
             printf("A quelle position souhaitez modifier la couleur ? Position : ");
             scanf(" %d", &position);
@@ -96,27 +95,36 @@ void playerInput(joueur *joueur, Couleur *combinaison)
 }
 
 /**
- * @brief Cette fonction permet de donner rentrer la combiniason secrete qui sera utilisée pour le jeu
- * 
+ * @brief Cette fonction permet de rentrer la combiniason secrete qui sera utilisée pour le jeu
+ *
  * Attention il faut appeller la fonction numberColorChoice avant pour connaitre le nombre de colonne dans le jeu
- * 
- * @param combinaison 
+ *
+ * @param combinaison
  */
-void combinaisonInput(Couleur *combinaison)
-{
-    ligne choix;
-    choix.pion = malloc(nombreColonne * sizeof(Couleur));
-    choix.nbrBonneCouleurBonEndroit = 0;
-    choix.nbrBonneCouleurMauvaisEndroit = 0;
 
-    if (choix.pion != NULL)
+ /* Pour moi ca ne sert à rien de déclarer "ligne choix" sachant que les champs
+ nbrBonneCouleurBonEndroit et nbrBonneCouleurMauvaisEndroit sont useless pour la ligne objectif,
+ autant travailler directement avec le "*combinaison" la segmentation fault venait d'ici
+ tu faisait prendre à combinaire la valeur de ligne.choix, les variable etant passé par la stack dans les fonctions
+ la variable combinaison du main et la variable combinaison de cette fonction n'avait plus la meme valeur
+ donc ne pointait plus vers la meme adresse. Le plus propre étant de renvoyer le tableau de couleur pour evitez ce genre de probleme
+ */
+Couleur* combinaisonInput(Couleur *combinaison)
+{
+    //ligne choix;
+    combinaison = (Couleur*)malloc(nombreColonne * sizeof(Couleur));
+    //choix.pion = malloc(nombreColonne * sizeof(Couleur));
+    //choix.nbrBonneCouleurBonEndroit = 0;
+    //choix.nbrBonneCouleurMauvaisEndroit = 0;
+
+    if (combinaison != NULL)
     {
         if (modeChoice())
         {
-            initalizePion(&choix);
-            char *color;
+            initalizePion(combinaison);
+            char *color = malloc(sizeof(char)*LENGTHCOLOR);
 
-            while (!isFull(&choix))
+            while (!isFull(combinaison))
             {
                 system("clear");
                 printf("                ***** CHOIX DE LA COMBINAISON SECRETE *****\n\n");
@@ -124,7 +132,7 @@ void combinaisonInput(Couleur *combinaison)
 
                 int position = 0;
 
-                displayChoice(choix.pion);
+                displayChoice(combinaison);
 
                 printf("A quelle position souhaitez modifier la couleur ? Position : ");
                 scanf("%d", &position);
@@ -134,7 +142,7 @@ void combinaisonInput(Couleur *combinaison)
                     printf("Quelle couleur souhaitez vous donner à cette case ? Couleur : ");
                     scanf("%s", color);
 
-                    fillChoixWithColor(choix.pion, position, color);
+                    fillChoixWithColor(combinaison, position, color);
                 }
                 else
                 {
@@ -155,7 +163,6 @@ void combinaisonInput(Couleur *combinaison)
             {
                 printf("\nhello\n");
                 int position = 0;
-                char *color;
 
                 printf("A quelle position souhaitez modifier la couleur ? Position : ");
                 scanf(" %d", &position);
@@ -165,7 +172,7 @@ void combinaisonInput(Couleur *combinaison)
                     printf("Quelle couleur souhaitez vous donner à cette case ? Couleur : ");
                     scanf(" %s", color);
 
-                    fillChoixWithColor(choix.pion, position, color);
+                    fillChoixWithColor(combinaison, position, color);
                 }
                 else
                 {
@@ -176,23 +183,23 @@ void combinaisonInput(Couleur *combinaison)
                 scanf(" %c", &playerAnswer);
             }
 
-            combinaison = choix.pion;
+
+            // combinaison = choix.pion; -> cause des fautes de segmentations
 
             //TODO save the combinaison in the log file
         }
 
         else
         {
+
+            Couleur randomColor;
+
             for (int i = 0; i < nombreColonne; i++)
             {
-                Couleur randomColor = (Couleur)rand() % 8;
-
                 randomColor = (Couleur)rand() % 7;
 
-                choix.pion[i] = randomColor;
+                combinaison[i] = randomColor;
             }
-
-            combinaison = choix.pion;
 
             //TODO save the combinaison in the log file
         }
@@ -204,14 +211,16 @@ void combinaisonInput(Couleur *combinaison)
     {
         printf("Erreur d'allocation mémoire\n");
     }
+
+    return combinaison;
 }
 
 /**
- * @brief Cette fonction permet de completer la ligne en fonction de la chaine de caractere representant la couleur donnée par le joueur 
- * 
+ * @brief Cette fonction permet de completer la ligne en fonction de la chaine de caractere representant la couleur donnée par le joueur
+ *
  * @param choix ligne actuellement en jeu
  * @param index index de la position de la couleur choisie
- * @param colorName chaine de caractere representant la couleur 
+ * @param colorName chaine de caractere representant la couleur
  */
 void fillChoixWithColor(Couleur *choix, int index, char *colorName)
 {
@@ -258,10 +267,10 @@ void fillChoixWithColor(Couleur *choix, int index, char *colorName)
 }
 
 /**
- * @brief Cette fonction permet de convertir la couleur donnée par l'utilisateur en majuscule afin d'eviter les malentendus 
- * 
- * @param name 
- * @return char* 
+ * @brief Cette fonction permet de convertir la couleur donnée par l'utilisateur en majuscule afin d'eviter les malentendus
+ *
+ * @param name
+ * @return char*
  */
 char *charPointerToUpperCase(char *name)
 {
@@ -275,41 +284,49 @@ char *charPointerToUpperCase(char *name)
 }
 
 /**
- * @brief Cette fonction permet de savoir si la ligne est remplie ou non 
- * 
- * @param choix 
+ * @brief Cette fonction permet de savoir si la ligne est remplie ou non
+ *
+ * @param choix
  * @return true si la ligne est remplie
  * @return false si il y a des cases vides dans la ligne
  */
-bool isFull(ligne *choix)
+
+ // on n'utilise que le champs pion de ligne, autant prendre en paramètre un tableau de couleur, ca reduira le nombre d'opération
+bool isFull(Couleur* combinaison)
 {
     bool indiceFull = true;
     for (int i = 0; i < nombreColonne; i++)
     {
-        if (choix->pion[i] == NONE)
+        if (combinaison[i] == NONE)
+        {
             indiceFull = false;
+            break; // permet de gagner en conplexité, vu qu'il suffit d'un indice ne contenant rien et la ligne n'est pas full
+        }
+
     }
 
     return indiceFull;
 }
 
 /**
- * @brief Cette fonction permet d'initialiser la couleur de chaque pion de la ligne 
- * 
+ * @brief Cette fonction permet d'initialiser la couleur de chaque pion de la ligne
+ *
  * @param choix nouvelle ligne du jeu
  */
-void initalizePion(ligne *choix)
+
+ // Pareil
+void initalizePion(Couleur* combinaison)
 {
     for (int i = 0; i < nombreColonne; i++)
     {
-        choix->pion[i] = NONE;
+        combinaison[i] = NONE;
     }
 }
 
 /**
- * @brief Cette fonction permet d'afficher le choix du joueur au fur et à mesure que celui-ci rempli la ligne 
- * 
- * @param proposition 
+ * @brief Cette fonction permet d'afficher le choix du joueur au fur et à mesure que celui-ci rempli la ligne
+ *
+ * @param proposition
  */
 void displayChoice(Couleur *proposition)
 {
@@ -352,10 +369,10 @@ void displayChoice(Couleur *proposition)
 }
 
 /**
- * @brief Cette fonction permet d'afficher ce que vient de jouer le joueur 
+ * @brief Cette fonction permet d'afficher ce que vient de jouer le joueur
  * Cette fonction peut etre utiliser pour faire du debug ou de l'affichage
- * 
- * @param joueur 
+ *
+ * @param joueur
  */
 void displayPlayerChoice(joueur *joueur)
 {
@@ -398,9 +415,9 @@ void displayPlayerChoice(joueur *joueur)
 }
 
 /**
- * @brief Cette fonction permet de connaitre le mode de jeu choisi par le joueur 
- * 
- * @return true si le JoueurVSJoueur 
+ * @brief Cette fonction permet de connaitre le mode de jeu choisi par le joueur
+ *
+ * @return true si le JoueurVSJoueur
  * @return false si JoueurVSOrdinateur
  */
 bool modeChoice()
@@ -430,8 +447,8 @@ bool modeChoice()
 }
 
 /**
- * @brief Cette fonction permet de determiner le nombre d'essais pour le jeu 
- * 
+ * @brief Cette fonction permet de determiner le nombre d'essais pour le jeu
+ *
  */
 void essaisNumberChoice()
 {
@@ -445,7 +462,7 @@ void essaisNumberChoice()
 
 /**
  * @brief Cette fonction permet d'initaliser le nombre de colonne dans le jeu
- * 
+ *
  */
 void numberColorChoice()
 {

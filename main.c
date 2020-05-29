@@ -8,7 +8,9 @@ int main()
     joueur1.nom = "Test";
     joueur1.score = 0;
 
+    essaisNumberChoice();
     numberColorChoice();
+
     combinaisonInput(&combinaison);
 
     playerInput(&joueur1, &combinaison);
