@@ -101,15 +101,6 @@ void combinaisonInput(Couleur *combinaison);
  */
 bool checkLineContent(Couleur *targetLigne, ligne *input, int lengthLine);
 
-/**
- * @brief Cette fonction permet d'initialiser une strucure joueur
- *
- * @param targetLigne
- * @param input
- * @param lengthLine
- * @return true
- * @return false
- */
 
 
 #endif
