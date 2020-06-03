@@ -3,6 +3,7 @@
 
 #include <string.h>
 #include <stdbool.h>
+#define lengthName 20
 
 typedef enum couleur
 {
@@ -24,54 +25,16 @@ typedef struct ligne
     int nbrBonneCouleurMauvaisEndroit;
 } ligne;
 
-typedef ligne *mastermind;
+typedef ligne* mastermind;
 
 typedef struct joueur
 {
-    char *nom;
+    char nom[lengthName];
     mastermind proposition;
     int score;
 } joueur;
 
 extern int nombreColonne;
 extern int nombreEssais;
-
-/**
- * @brief Cette fonction permet de verifier si le joueur a trouvé ou non la bonne combinaison. Elle retournera un boolean en fonction de la reussite ou non.
- *
- * @param targetLigne
- * @param input
- * @param lengthLine
- * @return true
- * @return false
- */
-bool checkLineContent(Couleur *targetLigne, ligne *input, int lengthLine);
-
-/**
- * @brief Cette fonction a pour but de créer un fichier ayant pour nom le nom du joueur et de son adversaire si le fichier existe deja nous demandons au  joueur de donner un nom au fichier
- *
- * @param joueur
- */
-void createGameFile(joueur *joueur);
-
-/**
- * @brief Cette fonction a pour but d'ajouter au fichier crée préalablement la ligne que vient de rentrer le joueur ainsi que les nbrBonneCouleurBonEndroit et nbrBonneCouleurMauvaisEndroit.
- *
- * @param proposition
- */
-void addLigneToFile(ligne *proposition);
-
-/**
- * @brief  Cette fonction a pour objectif de retrouver le nom du fichier dans le dossier Previous-Game.
- *
- * @return char*
- */
-char *findFileName();
-
-/**
- * @brief Cette fonction a pour objectif de creer une nouvelle ligne objectif et d'afficher les anciennes decisions qui ont été prises par le joueur afin qu'il se retrouve dans le jeu.
- *
- */
-void createGameFromFile();
 
 #endif // DEFINE_H_INCLUDED

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <stdbool.h>
 #include "define.h"
 
 /**
@@ -12,7 +13,7 @@
  * @param joueur
  * @param combinaison
  */
-void playerInput(joueur *joueur, Couleur *combinaison);
+void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai);
 
 /**
  * @brief Cette fonction permet d'afficher le choix du joueur au fur et à mesure que celui-ci rempli la ligne
@@ -87,6 +88,28 @@ void essaisNumberChoice();
  *
  * @param combinaison
  */
-Couleur* combinaisonInput(Couleur *combinaison);
+void combinaisonInput(Couleur *combinaison);
+
+/**
+ * @brief Cette fonction permet de verifier si le joueur a trouvé ou non la bonne combinaison. Elle retournera un boolean en fonction de la reussite ou non.
+ *
+ * @param targetLigne
+ * @param input
+ * @param lengthLine
+ * @return true
+ * @return false
+ */
+bool checkLineContent(Couleur *targetLigne, ligne *input, int lengthLine);
+
+/**
+ * @brief Cette fonction permet d'initialiser une strucure joueur
+ *
+ * @param targetLigne
+ * @param input
+ * @param lengthLine
+ * @return true
+ * @return false
+ */
+
 
 #endif
