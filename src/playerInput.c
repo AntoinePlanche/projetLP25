@@ -13,7 +13,7 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
 {
     initalizePion(joueur->proposition[numeroEssai].pion);
     printf("\n                ***** tour numero : %i  *****\n\n", numeroEssai);
-    char* color = malloc(sizeof(char)*LENGTHCOLOR);// Pour les reponses de l'utilisateur
+    char *color = malloc(sizeof(char) * LENGTHCOLOR); // Pour les reponses de l'utilisateur
 
     while (!isFull(joueur->proposition[numeroEssai].pion))
     {
@@ -78,17 +78,16 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
         scanf(" %c", &playerAnswer);
     }
 
-    if(checkLineContent(combinaison, &(joueur->proposition[numeroEssai]), nombreColonne))
+    if (checkLineContent(combinaison, &(joueur->proposition[numeroEssai]), nombreColonne))
     {
-        joueur->score = (nombreEssais - numeroEssai)*50; // + on met d'essai moins on gange de score.
-        printf("Felicitation, vous avez gagne avec un score de %i !!!",joueur->score);
+        joueur->score = (nombreEssais - numeroEssai) * 50; // + on met d'essai moins on gange de score.
+        printf("Felicitation, vous avez gagne avec un score de %i !!!", joueur->score);
         exit(0);
     }
     else
     {
-        printf("Dommage, vous n'avez pas trouvez la solution.\n Vous avez %i couleur(s) bonne(s) mais mal place et %i couleur(s) bonne(s) et bien place(s)\n",joueur->proposition[numeroEssai].nbrBonneCouleurMauvaisEndroit, joueur->proposition[numeroEssai].nbrBonneCouleurBonEndroit);
+        printf("Dommage, vous n'avez pas trouvez la solution.\n Vous avez %i couleur(s) bonne(s) mais mal place et %i couleur(s) bonne(s) et bien place(s)\n", joueur->proposition[numeroEssai].nbrBonneCouleurMauvaisEndroit, joueur->proposition[numeroEssai].nbrBonneCouleurBonEndroit);
     }
-
 }
 
 /**
@@ -99,7 +98,7 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
  * @param combinaison
  */
 
- /* Pour moi ca ne sert à rien de déclarer "ligne choix" sachant que les champs
+/* Pour moi ca ne sert à rien de déclarer "ligne choix" sachant que les champs
  nbrBonneCouleurBonEndroit et nbrBonneCouleurMauvaisEndroit sont useless pour la ligne objectif,
  autant travailler directement avec le "*combinaison" la segmentation fault venait d'ici
  tu faisait prendre à combinaire la valeur de ligne.choix, les variable etant passé par la stack dans les fonctions
@@ -114,7 +113,7 @@ void combinaisonInput(Couleur *combinaison)
         if (modeChoice())
         {
             initalizePion(combinaison);
-            char *color = malloc(sizeof(char)*LENGTHCOLOR);
+            char *color = malloc(sizeof(char) * LENGTHCOLOR);
 
             while (!isFull(combinaison))
             {
@@ -278,8 +277,8 @@ char *charPointerToUpperCase(char *name)
  * @return false si il y a des cases vides dans la ligne
  */
 
- // on n'utilise que le champs pion de ligne, autant prendre en paramètre un tableau de couleur, ca reduira le nombre d'opération
-bool isFull(Couleur* combinaison)
+// on n'utilise que le champs pion de ligne, autant prendre en paramètre un tableau de couleur, ca reduira le nombre d'opération
+bool isFull(Couleur *combinaison)
 {
     bool indiceFull = true;
     for (int i = 0; i < nombreColonne; i++)
@@ -289,7 +288,6 @@ bool isFull(Couleur* combinaison)
             indiceFull = false;
             break; // permet de gagner en conplexité, vu qu'il suffit d'un indice ne contenant rien et la ligne n'est pas full
         }
-
     }
 
     return indiceFull;
@@ -301,8 +299,8 @@ bool isFull(Couleur* combinaison)
  * @param choix nouvelle ligne du jeu
  */
 
- // Pareil
-void initalizePion(Couleur* combinaison)
+// Pareil
+void initalizePion(Couleur *combinaison)
 {
     for (int i = 0; i < nombreColonne; i++)
     {
@@ -486,6 +484,15 @@ void numberColorChoice()
     }
 }
 
+/**
+ * @brief Cette fonction permet de verifier si le joueur a trouvé ou non la bonne combinaison. Elle retournera un boolean en fonction de la reussite ou non.
+ *
+ * @param targetLigne
+ * @param input
+ * @param lengthLine
+ * @return true
+ * @return false
+ */
 bool checkLineContent(Couleur *targetLigne, ligne *input, int lengthLine)
 {
 
@@ -494,43 +501,42 @@ bool checkLineContent(Couleur *targetLigne, ligne *input, int lengthLine)
 
     typedef struct listIndex
     {
-        struct listIndex* next;
+        struct listIndex *next;
         int indexBienPlace;
         int indexMalPlace;
-    }listIndex;
-     /* liste chainé qui est sense retenir les index ou des case ont ete trouve
+    } listIndex;
+    /* liste chainé qui est sense retenir les index ou des case ont ete trouve
      En effet l'algorthmie pose ici plusieur probleme, si on a une couleur dans la "ligneObjectif" qui apparait deux fois dans la "ligneEssai"
      il ne faut pas compter deux couleur bien ou place. Cette liste  est ici pour apporter cette solution
      il stock donc tout les indexes de couleurs qui correspondent
      */
 
-    listIndex* l = NULL;
+    listIndex *l = NULL;
 
     for (int i = 0; i < lengthLine; i++)
     {
         if (targetLigne[i] == input->pion[i])
         {
             input->nbrBonneCouleurBonEndroit++;
-            if(l == NULL)
+            if (l == NULL)
             {
-                l = (listIndex*)malloc(sizeof(listIndex));
+                l = (listIndex *)malloc(sizeof(listIndex));
                 l->indexBienPlace = i;
                 l->indexMalPlace = -1;
                 l->next = NULL;
             }
             else
             {
-                listIndex* temp = l;
-                while(temp != NULL)
+                listIndex *temp = l;
+                while (temp != NULL)
                 {
                     temp = temp->next;
                 }
-                temp = (listIndex*)malloc(sizeof(listIndex));
+                temp = (listIndex *)malloc(sizeof(listIndex));
                 temp->indexBienPlace = i;
                 temp->indexMalPlace = -1;
                 temp->next = NULL;
             }
-
         }
     }
 
@@ -541,10 +547,10 @@ bool checkLineContent(Couleur *targetLigne, ligne *input, int lengthLine)
         for (int j = 0; j < lengthLine; j++)
         {
 
-            listIndex* tempo = l;
-            while(tempo != NULL)
+            listIndex *tempo = l;
+            while (tempo != NULL)
             {
-                if(tempo->indexBienPlace == i || tempo->indexMalPlace == j)
+                if (tempo->indexBienPlace == i || tempo->indexMalPlace == j)
                 {
                     enterLoop = false;
                     break;
@@ -559,21 +565,21 @@ bool checkLineContent(Couleur *targetLigne, ligne *input, int lengthLine)
                 if (targetLigne[i] == input->pion[i])
                 {
                     input->nbrBonneCouleurBonEndroit++;
-                    if(l == NULL)
+                    if (l == NULL)
                     {
-                        l = (listIndex*)malloc(sizeof(listIndex));
+                        l = (listIndex *)malloc(sizeof(listIndex));
                         l->indexMalPlace = j;
                         l->indexBienPlace = -1;
                         l->next = NULL;
                     }
                     else
                     {
-                        listIndex* temp = l;
-                        while(temp != NULL)
+                        listIndex *temp = l;
+                        while (temp != NULL)
                         {
                             temp = temp->next;
                         }
-                        temp = (listIndex*)malloc(sizeof(listIndex));
+                        temp = (listIndex *)malloc(sizeof(listIndex));
                         temp->indexMalPlace = j;
                         temp->indexBienPlace = -1;
                         temp->next = NULL;
@@ -591,4 +597,3 @@ bool checkLineContent(Couleur *targetLigne, ligne *input, int lengthLine)
 
     return false;
 }
-
