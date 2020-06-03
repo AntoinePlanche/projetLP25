@@ -9,89 +9,86 @@ int nombreColonne = 0;
  *
  * @param joueur
  */
-void playerInput(joueur *joueur, Couleur *combinaison)
+void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
 {
-    ligne choix;
+    initalizePion(joueur->proposition[numeroEssai].pion);
+    printf("\n                ***** tour numero : %i  *****\n\n", numeroEssai);
+    char* color = malloc(sizeof(char)*LENGTHCOLOR);// Pour les reponses de l'utilisateur
 
-    choix.pion = malloc(nombreColonne * sizeof(Couleur));
-
-    //debug line
-    displayChoice(combinaison);
-
-    if (choix.pion != NULL)
+    while (!isFull(joueur->proposition[numeroEssai].pion))
     {
-        initalizePion(choix.pion);
-        char* color = malloc(sizeof(char)*LENGTHCOLOR);
-        while (!isFull(choix.pion))
+        displayChoice(combinaison); // pour tester si ca marche
+        //system("cls"); //resp system("clear")
+        printf("\n                ***** %s a toi de jouer !*****\n\n", joueur->nom);
+        printf("Choix de couleur : ROUGE, JAUNE, BLEU, ORANGE, VERT, BLANC, VIOLET, ROSE\n\n");
+
+        int position = 0;
+
+        displayChoice(joueur->proposition[numeroEssai].pion);
+
+        printf("A quelle position souhaitez modifier la couleur ? Position : ");
+        scanf("%d", &position);
+
+        if (position < nombreColonne)
         {
-            //system("clear");
-            printf("                ***** Au tour de %s *****\n\n", joueur->nom);
-            printf("Choix de couleur : ROUGE, JAUNE, BLEU, ORANGE, VERT, BLANC, VIOLET, ROSE\n");
+            printf("Quelle couleur souhaitez vous donner à cette case ? Couleur : ");
+            scanf("%s", color);
 
-            int position = 0;
-
-            displayChoice(choix.pion);
-
-            printf("A quelle position souhaitez modifier la couleur ? Position : ");
-            scanf("%d", &position);
-
-            if (position < nombreColonne)
-            {
-                printf("Quelle couleur souhaitez vous donner à cette case ? Couleur : ");
-                scanf("%s", color);
-
-                fillChoixWithColor(choix.pion, position, color);
-            }
-            else
-            {
-                printf("Cette position n'existe pas\n");
-            }
+            fillChoixWithColor(joueur->proposition[numeroEssai].pion, position, color);
         }
+        else
+        {
+            printf("Cette position n'existe pas\n");
+        }
+    }
 
-        char playerAnswer;
-        printf("Validez vous cette proposition (o/n) ");
+    char playerAnswer;
+    displayChoice(joueur->proposition[numeroEssai].pion);
+    printf("Validez vous cette proposition (o/n)\n");
+    scanf(" %c", &playerAnswer);
+    while (playerAnswer != 'o' && playerAnswer != 'O' && playerAnswer != 'n' && playerAnswer != 'N')
+    {
+        printf("Votre reponse doit etre (o/n)\n");
         scanf(" %c", &playerAnswer);
-        while (playerAnswer != 'o' && playerAnswer != 'O' && playerAnswer != 'n' && playerAnswer != 'N')
+    }
+
+    while ((playerAnswer == 'N' || playerAnswer == 'n') && (playerAnswer != 'O' && playerAnswer != 'o'))
+    {
+        printf("\nhello\n");
+        int position = 0;
+
+        printf("A quelle position souhaitez modifier la couleur ? Position : ");
+        scanf(" %d", &position);
+
+        if (position < nombreColonne)
         {
-            printf("Votre reponse doit etre (o/n)\n");
-            scanf(" %c", &playerAnswer);
+            printf("Quelle couleur souhaitez vous donner a cette case ? Couleur : ");
+            scanf(" %s", color);
+
+            fillChoixWithColor(joueur->proposition[numeroEssai].pion, position, color);
+        }
+        else
+        {
+            printf("Cette position n'existe pas\n");
         }
 
-        while ((playerAnswer == 'N' || playerAnswer == 'n') && (playerAnswer != 'O' && playerAnswer != 'o'))
-        {
-            printf("\nhello\n");
-            int position = 0;
+        displayChoice(joueur->proposition[numeroEssai].pion);
 
-            printf("A quelle position souhaitez modifier la couleur ? Position : ");
-            scanf(" %d", &position);
+        printf("Validez vous cette proposition (o/n)\n");
+        scanf(" %c", &playerAnswer);
+    }
 
-            if (position < nombreColonne)
-            {
-                printf("Quelle couleur souhaitez vous donner à cette case ? Couleur : ");
-                scanf(" %s", color);
-
-                fillChoixWithColor(choix.pion, position, color);
-            }
-            else
-            {
-                printf("Cette position n'existe pas\n");
-            }
-
-            displayChoice(choix.pion);
-
-            printf("Validez vous cette proposition (o/n) ");
-            scanf(" %c", &playerAnswer);
-        }
-
-        displayChoice(choix.pion);
-        printf("%d\n", checkLineContent(combinaison, &choix, nombreColonne));
-
-        joueur->proposition = &choix;
+    if(checkLineContent(combinaison, &(joueur->proposition[numeroEssai]), nombreColonne))
+    {
+        joueur->score = (nombreEssais - numeroEssai)*50; // + on met d'essai moins on gange de score.
+        printf("Felicitation, vous avez gagne avec un score de %i !!!",joueur->score);
+        exit(0);
     }
     else
     {
-        printf("Erreur d'allocation mémoire\n");
+        printf("Dommage, vous n'avez pas trouvez la solution.\n Vous avez %i couleur(s) bonne(s) mais mal place et %i couleur(s) bonne(s) et bien place(s)\n",joueur->proposition[numeroEssai].nbrBonneCouleurMauvaisEndroit, joueur->proposition[numeroEssai].nbrBonneCouleurBonEndroit);
     }
+
 }
 
 /**
@@ -109,13 +106,8 @@ void playerInput(joueur *joueur, Couleur *combinaison)
  la variable combinaison du main et la variable combinaison de cette fonction n'avait plus la meme valeur
  donc ne pointait plus vers la meme adresse. Le plus propre étant de renvoyer le tableau de couleur pour evitez ce genre de probleme
  */
-Couleur* combinaisonInput(Couleur *combinaison)
+void combinaisonInput(Couleur *combinaison)
 {
-    //ligne choix;
-    combinaison = (Couleur*)malloc(nombreColonne * sizeof(Couleur));
-    //choix.pion = malloc(nombreColonne * sizeof(Couleur));
-    //choix.nbrBonneCouleurBonEndroit = 0;
-    //choix.nbrBonneCouleurMauvaisEndroit = 0;
 
     if (combinaison != NULL)
     {
@@ -126,7 +118,7 @@ Couleur* combinaisonInput(Couleur *combinaison)
 
             while (!isFull(combinaison))
             {
-                system("clear");
+                //system("cls"); // resp system("clear");
                 printf("                ***** CHOIX DE LA COMBINAISON SECRETE *****\n\n");
                 printf("Choix de couleur : ROUGE, JAUNE, BLEU, ORANGE, VERT, BLANC, VIOLET, ROSE\n");
 
@@ -183,9 +175,6 @@ Couleur* combinaisonInput(Couleur *combinaison)
                 scanf(" %c", &playerAnswer);
             }
 
-
-            // combinaison = choix.pion; -> cause des fautes de segmentations
-
             //TODO save the combinaison in the log file
         }
 
@@ -205,14 +194,12 @@ Couleur* combinaisonInput(Couleur *combinaison)
         }
 
         //TODO remove after testing
-        displayChoice(combinaison);
+        // displayChoice(combinaison);
     }
     else
     {
         printf("Erreur d'allocation mémoire\n");
     }
-
-    return combinaison;
 }
 
 /**
@@ -498,3 +485,110 @@ void numberColorChoice()
         } while (playerAnswer != 'o' && playerAnswer != 'O' && playerAnswer != 'n' && playerAnswer != 'N');
     }
 }
+
+bool checkLineContent(Couleur *targetLigne, ligne *input, int lengthLine)
+{
+
+    input->nbrBonneCouleurBonEndroit = 0;
+    input->nbrBonneCouleurMauvaisEndroit = 0;
+
+    typedef struct listIndex
+    {
+        struct listIndex* next;
+        int indexBienPlace;
+        int indexMalPlace;
+    }listIndex;
+     /* liste chainé qui est sense retenir les index ou des case ont ete trouve
+     En effet l'algorthmie pose ici plusieur probleme, si on a une couleur dans la "ligneObjectif" qui apparait deux fois dans la "ligneEssai"
+     il ne faut pas compter deux couleur bien ou place. Cette liste  est ici pour apporter cette solution
+     il stock donc tout les indexes de couleurs qui correspondent
+     */
+
+    listIndex* l = NULL;
+
+    for (int i = 0; i < lengthLine; i++)
+    {
+        if (targetLigne[i] == input->pion[i])
+        {
+            input->nbrBonneCouleurBonEndroit++;
+            if(l == NULL)
+            {
+                l = (listIndex*)malloc(sizeof(listIndex));
+                l->indexBienPlace = i;
+                l->indexMalPlace = -1;
+                l->next = NULL;
+            }
+            else
+            {
+                listIndex* temp = l;
+                while(temp != NULL)
+                {
+                    temp = temp->next;
+                }
+                temp = (listIndex*)malloc(sizeof(listIndex));
+                temp->indexBienPlace = i;
+                temp->indexMalPlace = -1;
+                temp->next = NULL;
+            }
+
+        }
+    }
+
+    bool enterLoop = true;
+
+    for (int i = 0; i < lengthLine; i++)
+    {
+        for (int j = 0; j < lengthLine; j++)
+        {
+
+            listIndex* tempo = l;
+            while(tempo != NULL)
+            {
+                if(tempo->indexBienPlace == i || tempo->indexMalPlace == j)
+                {
+                    enterLoop = false;
+                    break;
+                }
+                tempo = tempo->next;
+            }
+
+            if (input->pion[j] == targetLigne[i] && i != j && enterLoop)
+            {
+                input->nbrBonneCouleurMauvaisEndroit++;
+                i++;
+                if (targetLigne[i] == input->pion[i])
+                {
+                    input->nbrBonneCouleurBonEndroit++;
+                    if(l == NULL)
+                    {
+                        l = (listIndex*)malloc(sizeof(listIndex));
+                        l->indexMalPlace = j;
+                        l->indexBienPlace = -1;
+                        l->next = NULL;
+                    }
+                    else
+                    {
+                        listIndex* temp = l;
+                        while(temp != NULL)
+                        {
+                            temp = temp->next;
+                        }
+                        temp = (listIndex*)malloc(sizeof(listIndex));
+                        temp->indexMalPlace = j;
+                        temp->indexBienPlace = -1;
+                        temp->next = NULL;
+                    }
+                }
+            }
+        }
+    }
+
+    if (input->nbrBonneCouleurBonEndroit == lengthLine)
+    {
+
+        return true;
+    }
+
+    return false;
+}
+
