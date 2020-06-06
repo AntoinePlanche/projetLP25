@@ -99,7 +99,7 @@ void combinaisonInput(Couleur *combinaison);
  * @return true
  * @return false
  */
-bool checkLineContent(Couleur *targetLigne, ligne *input, int lengthLine);
+bool checkLineContent(Couleur *targetLigne, ligne *input);
 
 /**
  * @brief Cette fonction permet d'initialiser une strucure joueur
