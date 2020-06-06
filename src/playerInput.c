@@ -79,7 +79,7 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
         scanf(" %c", &playerAnswer);
     }
 
-    if(checkLineContent(combinaison, &(joueur->proposition[numeroEssai]), nombreColonne))
+    if(checkLineContent(combinaison, &(joueur->proposition[numeroEssai])))
     {
         joueur->score = (nombreEssais - numeroEssai)*50; // plus on met d'essai moins on gagne de score.
         printf("Felicitation, vous avez gagne avec un score de %i !!!",joueur->score);
@@ -483,7 +483,8 @@ void numberColorChoice()
     }
 }
 
-bool checkLineContent(Couleur *targetLigne, ligne *input, int lengthLine)
+
+bool checkLineContent(Couleur *targetLigne, ligne *input)
 {
 
     input->nbrBonneCouleurBonEndroit = 0;
@@ -495,7 +496,7 @@ bool checkLineContent(Couleur *targetLigne, ligne *input, int lengthLine)
         int indexLigneObjectif;
         int indexLignePropose;
     }listIndex;
-     /* liste chainé qui est sense retenir les index ou des case ont ete trouve
+     /* liste chainé de deja vu qui est sense retenir les index ou des case ont ete trouve
      En effet l'algorthmie pose ici plusieur probleme, si on a une couleur dans la "ligneObjectif" qui apparait deux fois dans la "ligneEssai"
      il ne faut pas compter deux couleur bien ou place. Cette liste  est ici pour apporter cette solution
      il stock donc tout les indexes de couleurs qui correspondent
@@ -503,7 +504,7 @@ bool checkLineContent(Couleur *targetLigne, ligne *input, int lengthLine)
 
     listIndex* l = NULL;
 
-    for (int i = 0; i < lengthLine; i++)
+    for (int i = 0; i < nombreColonne; i++)
     {
         if (targetLigne[i] == input->pion[i])
         {
@@ -535,10 +536,10 @@ bool checkLineContent(Couleur *targetLigne, ligne *input, int lengthLine)
     bool enterCondition = true;
     listIndex* tempo = NULL;
 
-    for (int i = 0; i < lengthLine; i++)
+    for (int i = 0; i < nombreColonne; i++)
     {
 
-        for (int j = 0; j < lengthLine; j++)
+        for (int j = 0; j < nombreColonne; j++)
         {
 
             tempo = l;
@@ -591,7 +592,7 @@ bool checkLineContent(Couleur *targetLigne, ligne *input, int lengthLine)
         l=tmp;
     }
 
-    if (input->nbrBonneCouleurBonEndroit == lengthLine)
+    if (input->nbrBonneCouleurBonEndroit == nombreColonne)
     {
 
         return true;
