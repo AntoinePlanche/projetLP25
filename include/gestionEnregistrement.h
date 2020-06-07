@@ -3,13 +3,14 @@
 
 #include <string.h>
 #include <stdbool.h>
+#include "define.h"
 
 /**
  * @brief Cette fonction a pour but de créer un fichier ayant pour nom le nom du joueur et de son adversaire si le fichier existe deja nous demandons au  joueur de donner un nom au fichier
  *
  * @param joueur
  */
-void createGameFile(joueur *joueur);
+void createGameFile(joueur joueur, char *str);
 
 /**
  * @brief Cette fonction a pour but d'ajouter au fichier crée préalablement la ligne que vient de rentrer le joueur ainsi que les nbrBonneCouleurBonEndroit et nbrBonneCouleurMauvaisEndroit.
@@ -30,5 +31,9 @@ char *findFileName();
  *
  */
 void createGameFromFile();
+
+void combinaisonSecret(Couleur *combinaison);
+
+extern char filename[100];
 
 #endif
