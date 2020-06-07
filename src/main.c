@@ -3,14 +3,17 @@
 #include <time.h>
 #include "../include/define.h"
 #include "../include/playerInput.h"
+#include "../include/gestionEnregistrement.h"
 
 int main()
 {
     // SI fichier est vide
+    char str[100];
     srand(time(NULL));
     joueur *nouveauJoueur = malloc(sizeof(joueur));
     printf("Bonjour, quel est votre nom ?\n");
     scanf("%s",nouveauJoueur->nom);
+    createGameFile(*nouveauJoueur, str);
     nouveauJoueur->score = 0;
     essaisNumberChoice();
     numberColorChoice();
