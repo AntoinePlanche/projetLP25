@@ -1,5 +1,6 @@
 #include "../include/playerInput.h"
 #define LENGTHCOLOR 10
+#include "../include/gestionEnregistrement.h"
 
 
 int nombreEssais = 0;
@@ -78,6 +79,8 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
         printf("Validez vous cette proposition (o/n)\n");
         scanf(" %c", &playerAnswer);
     }
+
+    addLigneToFile(&(joueur->proposition[numeroEssai]));
 
     if(checkLineContent(combinaison, &(joueur->proposition[numeroEssai])))
     {
@@ -190,6 +193,8 @@ void combinaisonInput(Couleur *combinaison)
 
                 combinaison[i] = randomColor;
             }
+
+            combinaisonSecret(combinaison);
 
             //TODO save the combinaison in the log file
         }
@@ -600,4 +605,3 @@ bool checkLineContent(Couleur *targetLigne, ligne *input)
 
     return false;
 }
-
