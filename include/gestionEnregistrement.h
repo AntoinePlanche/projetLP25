@@ -32,8 +32,17 @@ char *findFileName();
  */
 void createGameFromFile();
 
+/**
+ * @brief Cette fonction permet d'enregistrer la combinaison secrete dans le fichier
+ * 
+ * @param combinaison 
+ */
 void combinaisonSecret(Couleur *combinaison);
 
+/**
+ * @brief Corresponf au nom du fichier donné par le joueur
+ * 
+ */
 extern char filename[100];
 
 #endif
