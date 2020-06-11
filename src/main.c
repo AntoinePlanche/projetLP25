@@ -13,7 +13,7 @@ int main()
     char choixReprendrePartie, str[100];
     DIR *d;
     struct dirent *dir;
-    d = opendir(".\Previous-Game");
+    d = opendir("./Previous-Game");
     char *isCSVFile;
     int nbFileCSV = 0;
     srand(time(NULL));
