@@ -8,14 +8,13 @@ void *findFileName(){
 
     DIR *d;
     struct dirent *dir;
-    d = opendir(".\Previous-Game");
+    d = opendir("./Previous-Game");
     char choixFile [100];
     char *testCSVFile;
     int nbFileCSV = 0;
 
 
         printf("Voici la liste des fichiers de sauvegarde :\n");
-            d = opendir(".\Previous-Game");
             if (d)
             {
                 while ((dir = readdir(d)) != NULL)
@@ -30,7 +29,7 @@ void *findFileName(){
                 closedir(d);
 
             }
-            d = opendir(".\Previous-Game");
+            d = opendir("./Previous-Game");
             bool testFind = false;
             printf("\nQuelle partie voulez-vous reprendre ? (par exemple fichier.csv)\n");
             scanf("%s", choixFile);
@@ -62,7 +61,7 @@ void *findFileName(){
             {
                 printf("\nQuelle partie voulez-vous reprendre ? (par exemple fichier.csv)\n");
                 scanf("%s", choixFile);
-                d = opendir(".\Previous-Game");
+                d = opendir("./Previous-Game");
                 if(d)
                 {
 
