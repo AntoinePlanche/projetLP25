@@ -4,6 +4,7 @@
 
 int nombreEssais = 0;
 int nombreColonne = 0;
+char filename[100];
 
 /**
  * @brief Cette fonction permet de remplir la ligne du joueur
@@ -21,7 +22,7 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
         //system("cls"); //resp system("clear")
         printf("\n                   ***** tour numero : %i  *****\n\n", numeroEssai + 1);
         printf("\n                ***** %s a toi de jouer !*****\n\n", joueur->nom);
-        printf("Choix de couleur : ROUGE, JAUNE, BLEU, ORANGE, VERT, BLANC, VIOLET, ROSE\n\n");
+        printf("Choix de couleur : ROUGE, JAUNE, BLEU, ORANGE, VERT, BLANC, VIOLET, ROSE / Position %d pour quitter\n\n", nombreColonne + 1);
 
         int position = 0;
 
@@ -30,12 +31,43 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
         printf("A quelle position souhaitez vous modifier la couleur ? Position : ");
         scanf("%d", &position);
 
+        printf("position = %d\n", position);
+
         if (position < nombreColonne)
         {
             printf("Quelle couleur souhaitez vous donner a cette case ? Couleur : ");
             scanf("%s", color);
 
             fillChoixWithColor(joueur->proposition[numeroEssai].pion, position, color);
+        }
+        else if (position == nombreColonne + 1)
+        {
+            char playerAnswer;
+            printf("Voulez vous quitter ? (o/n)\n");
+            scanf(" %c", &playerAnswer);
+            while (playerAnswer != 'o' && playerAnswer != 'O' && playerAnswer != 'n' && playerAnswer != 'N')
+            {
+                printf("Votre reponse doit etre (o/n)\n");
+                scanf(" %c", &playerAnswer);
+            }
+
+            if (playerAnswer == 'O' || playerAnswer == 'o')
+            {
+                printf("Voulez vous supprimer le fichier de la partie en cours ? (o/n)\n");
+                scanf(" %c", &playerAnswer);
+                while (playerAnswer != 'o' && playerAnswer != 'O' && playerAnswer != 'n' && playerAnswer != 'N')
+                {
+                    printf("Votre reponse doit etre (o/n)\n");
+                    scanf(" %c", &playerAnswer);
+                }
+                if (playerAnswer == 'O' || playerAnswer == 'o')
+                {
+                    remove(filename);
+                    printf("Fichier supprimé \n");
+                }
+                printf("A bientot ! \n");
+                exit(0);
+            }
         }
         else
         {
@@ -85,7 +117,7 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
     {
         addLigneToFile(&(joueur->proposition[numeroEssai]));
         joueur->score = (nombreEssais - numeroEssai) * 50; // plus on met d'essai moins on gagne de score.
-        printf("Felicitation, vous avez gagne avec un score de %i !!!", joueur->score);
+        printf("Felicitation, vous avez gagne avec un score de %i !!!\n", joueur->score);
         exit(0);
     }
     else
@@ -101,14 +133,6 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
  * Attention il faut appeller la fonction numberColorChoice avant pour connaitre le nombre de colonne dans le jeu
  *
  * @param combinaison
- */
-
-/* Pour moi ca ne sert à rien de déclarer "ligne choix" sachant que les champs
- nbrBonneCouleurBonEndroit et nbrBonneCouleurMauvaisEndroit sont useless pour la ligne objectif,
- autant travailler directement avec le "*combinaison" la segmentation fault venait d'ici
- tu faisait prendre à combinaire la valeur de ligne.choix, les variable etant passé par la stack dans les fonctions
- la variable combinaison du main et la variable combinaison de cette fonction n'avait plus la meme valeur
- donc ne pointait plus vers la meme adresse. Le plus propre étant de renvoyer le tableau de couleur pour evitez ce genre de probleme
  */
 void combinaisonInput(Couleur *combinaison)
 {
