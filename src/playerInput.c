@@ -31,8 +31,6 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
         printf("A quelle position souhaitez vous modifier la couleur ? Position : ");
         scanf("%d", &position);
 
-        printf("position = %d\n", position);
-
         if (position < nombreColonne)
         {
             printf("Quelle couleur souhaitez vous donner a cette case ? Couleur : ");
