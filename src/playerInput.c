@@ -2,7 +2,6 @@
 #define LENGTHCOLOR 10
 #include "../include/gestionEnregistrement.h"
 
-
 int nombreEssais = 0;
 int nombreColonne = 0;
 
@@ -14,13 +13,13 @@ int nombreColonne = 0;
 void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
 {
     initalizePion(joueur->proposition[numeroEssai].pion);
-    char* color = malloc(sizeof(char)*LENGTHCOLOR);// Pour les reponses de l'utilisateur
+    char *color = malloc(sizeof(char) * LENGTHCOLOR); // Pour les reponses de l'utilisateur
 
     while (!isFull(joueur->proposition[numeroEssai].pion))
     {
         displayChoice(combinaison);
         //system("cls"); //resp system("clear")
-        printf("\n                   ***** tour numero : %i  *****\n\n", numeroEssai+1);
+        printf("\n                   ***** tour numero : %i  *****\n\n", numeroEssai + 1);
         printf("\n                ***** %s a toi de jouer !*****\n\n", joueur->nom);
         printf("Choix de couleur : ROUGE, JAUNE, BLEU, ORANGE, VERT, BLANC, VIOLET, ROSE\n\n");
 
@@ -80,19 +79,20 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
         scanf(" %c", &playerAnswer);
     }
 
-    addLigneToFile(&(joueur->proposition[numeroEssai]));
+    // addLigneToFile(&(joueur->proposition[numeroEssai])); @ShoyenProd le probleme est plutot simple tu appelles add ligne avant d'avoir verifier le contenu de la ligne ce qu'il ce fait dans la condition qui suit donc il faut mettre les appels de fonction dans les conditions et ça fonctionne :)
 
-    if(checkLineContent(combinaison, &(joueur->proposition[numeroEssai])))
+    if (checkLineContent(combinaison, &(joueur->proposition[numeroEssai])))
     {
-        joueur->score = (nombreEssais - numeroEssai)*50; // plus on met d'essai moins on gagne de score.
-        printf("Felicitation, vous avez gagne avec un score de %i !!!",joueur->score);
+        addLigneToFile(&(joueur->proposition[numeroEssai]));
+        joueur->score = (nombreEssais - numeroEssai) * 50; // plus on met d'essai moins on gagne de score.
+        printf("Felicitation, vous avez gagne avec un score de %i !!!", joueur->score);
         exit(0);
     }
     else
     {
-        printf("Dommage, vous n'avez pas trouvez la solution.\nVous avez %i couleur(s) bonne(s) mais mal place et %i couleur(s) bonne(s) et bien place(s)\n",joueur->proposition[numeroEssai].nbrBonneCouleurMauvaisEndroit, joueur->proposition[numeroEssai].nbrBonneCouleurBonEndroit);
+        addLigneToFile(&(joueur->proposition[numeroEssai]));
+        printf("Dommage, vous n'avez pas trouvez la solution.\nVous avez %i couleur(s) bonne(s) mais mal place et %i couleur(s) bonne(s) et bien place(s)\n", joueur->proposition[numeroEssai].nbrBonneCouleurMauvaisEndroit, joueur->proposition[numeroEssai].nbrBonneCouleurBonEndroit);
     }
-
 }
 
 /**
@@ -103,7 +103,7 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
  * @param combinaison
  */
 
- /* Pour moi ca ne sert à rien de déclarer "ligne choix" sachant que les champs
+/* Pour moi ca ne sert à rien de déclarer "ligne choix" sachant que les champs
  nbrBonneCouleurBonEndroit et nbrBonneCouleurMauvaisEndroit sont useless pour la ligne objectif,
  autant travailler directement avec le "*combinaison" la segmentation fault venait d'ici
  tu faisait prendre à combinaire la valeur de ligne.choix, les variable etant passé par la stack dans les fonctions
@@ -118,7 +118,7 @@ void combinaisonInput(Couleur *combinaison)
         if (modeChoice())
         {
             initalizePion(combinaison);
-            char *color = malloc(sizeof(char)*LENGTHCOLOR);
+            char *color = malloc(sizeof(char) * LENGTHCOLOR);
 
             while (!isFull(combinaison))
             {
@@ -178,8 +178,7 @@ void combinaisonInput(Couleur *combinaison)
                 printf("Validez vous cette proposition (o/n) ");
                 scanf(" %c", &playerAnswer);
             }
-
-            //TODO save the combinaison in the log file
+            combinaisonSecret(combinaison);
         }
 
         else
@@ -195,10 +194,7 @@ void combinaisonInput(Couleur *combinaison)
             }
 
             combinaisonSecret(combinaison);
-
-            //TODO save the combinaison in the log file
         }
-
     }
     else
     {
@@ -280,8 +276,8 @@ char *charPointerToUpperCase(char *name)
  * @return false si il y a des cases vides dans la ligne
  */
 
- // on n'utilise que le champs pion de ligne, autant prendre en paramètre un tableau de couleur, ca reduira le nombre d'opération
-bool isFull(Couleur* combinaison)
+// on n'utilise que le champs pion de ligne, autant prendre en paramètre un tableau de couleur, ca reduira le nombre d'opération
+bool isFull(Couleur *combinaison)
 {
     bool indiceFull = true;
     for (int i = 0; i < nombreColonne; i++)
@@ -291,7 +287,6 @@ bool isFull(Couleur* combinaison)
             indiceFull = false;
             break; // permet de gagner en conplexité, vu qu'il suffit d'un indice ne contenant rien et la ligne n'est pas full
         }
-
     }
 
     return indiceFull;
@@ -303,8 +298,8 @@ bool isFull(Couleur* combinaison)
  * @param choix nouvelle ligne du jeu
  */
 
- // Pareil
-void initalizePion(Couleur* combinaison)
+// Pareil
+void initalizePion(Couleur *combinaison)
 {
     for (int i = 0; i < nombreColonne; i++)
     {
@@ -488,7 +483,6 @@ void numberColorChoice()
     }
 }
 
-
 bool checkLineContent(Couleur *targetLigne, ligne *input)
 {
 
@@ -497,49 +491,47 @@ bool checkLineContent(Couleur *targetLigne, ligne *input)
 
     typedef struct listIndex
     {
-        struct listIndex* next;
+        struct listIndex *next;
         int indexLigneObjectif;
         int indexLignePropose;
-    }listIndex;
-     /* liste chainé de deja vu qui est sense retenir les index ou des case ont ete trouve
+    } listIndex;
+    /* liste chainé de deja vu qui est sense retenir les index ou des case ont ete trouve
      En effet l'algorthmie pose ici plusieur probleme, si on a une couleur dans la "ligneObjectif" qui apparait deux fois dans la "ligneEssai"
      il ne faut pas compter deux couleur bien ou place. Cette liste  est ici pour apporter cette solution
      il stock donc tout les indexes de couleurs qui correspondent
      */
 
-    listIndex* l = NULL;
+    listIndex *l = NULL;
 
     for (int i = 0; i < nombreColonne; i++)
     {
         if (targetLigne[i] == input->pion[i])
         {
             input->nbrBonneCouleurBonEndroit++;
-            if(l == NULL)
+            if (l == NULL)
             {
-                l = (listIndex*)malloc(sizeof(listIndex));
+                l = (listIndex *)malloc(sizeof(listIndex));
                 l->indexLigneObjectif = i;
                 l->indexLignePropose = i;
                 l->next = NULL;
             }
             else
             {
-                listIndex* temp = l;
-                while(temp->next != NULL)
+                listIndex *temp = l;
+                while (temp->next != NULL)
                 {
                     temp = temp->next;
                 }
-                temp->next = (listIndex*)malloc(sizeof(listIndex));
+                temp->next = (listIndex *)malloc(sizeof(listIndex));
                 temp->next->indexLigneObjectif = i;
                 temp->next->indexLignePropose = i;
                 temp->next->next = NULL;
             }
-
         }
     }
 
-
     bool enterCondition = true;
-    listIndex* tempo = NULL;
+    listIndex *tempo = NULL;
 
     for (int i = 0; i < nombreColonne; i++)
     {
@@ -549,25 +541,24 @@ bool checkLineContent(Couleur *targetLigne, ligne *input)
 
             tempo = l;
 
-            while(tempo != NULL)
+            while (tempo != NULL)
             {
 
-                if(tempo->indexLigneObjectif == i || tempo->indexLignePropose == j)
+                if (tempo->indexLigneObjectif == i || tempo->indexLignePropose == j)
                 {
                     enterCondition = false;
                     break;
                 }
                 tempo = tempo->next;
-
             }
 
             if ((input->pion[j] == targetLigne[i] && i != j) && enterCondition)
             {
                 input->nbrBonneCouleurMauvaisEndroit++;
 
-                if(l == NULL)
+                if (l == NULL)
                 {
-                    l = (listIndex*)malloc(sizeof(listIndex));
+                    l = (listIndex *)malloc(sizeof(listIndex));
                     l->indexLignePropose = j;
                     l->indexLigneObjectif = i;
                     l->next = NULL;
@@ -575,11 +566,11 @@ bool checkLineContent(Couleur *targetLigne, ligne *input)
                 else
                 {
                     tempo = l;
-                    while(tempo->next != NULL)
+                    while (tempo->next != NULL)
                     {
                         tempo = tempo->next;
                     }
-                    tempo->next = (listIndex*)malloc(sizeof(listIndex));
+                    tempo->next = (listIndex *)malloc(sizeof(listIndex));
                     tempo->next->indexLignePropose = j;
                     tempo->next->indexLigneObjectif = i;
                     tempo->next->next = NULL;
@@ -589,17 +580,16 @@ bool checkLineContent(Couleur *targetLigne, ligne *input)
         }
     }
 
-    listIndex* tmp ;
-    while(l != NULL)
+    listIndex *tmp;
+    while (l != NULL)
     {
-        tmp=l->next;
-        free (l);
-        l=tmp;
+        tmp = l->next;
+        free(l);
+        l = tmp;
     }
 
     if (input->nbrBonneCouleurBonEndroit == nombreColonne)
     {
-
         return true;
     }
 
