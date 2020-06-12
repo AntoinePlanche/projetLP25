@@ -88,7 +88,7 @@ void essaisNumberChoice();
  *
  * @param combinaison
  */
-void combinaisonInput(Couleur *combinaison);
+void combinaisonInput(Couleur *combinaison, joueur *joueur);
 
 /**
  * @brief Cette fonction permet de verifier si le joueur a trouvé ou non la bonne combinaison. Elle retournera un boolean en fonction de la reussite ou non.
