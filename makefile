@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-Wall -Werror
 EXEC=Mastermind
-SRC= playerInput.c createGameFile.c findFileName.c createGameFromFile.c addLigneToFile.c combinaisonSecret.c main.c 
+SRC= playerInput.c addFirstInfo.c createGameFile.c findFileName.c createGameFromFile.c addLigneToFile.c combinaisonSecret.c main.c 
 IDIR=include/
 ODIR=src/
 OBJ= $(addprefix $(ODIR),$(SRC:.c=.o))
