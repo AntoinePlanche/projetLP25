@@ -16,7 +16,6 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
     initalizePion(joueur->proposition[numeroEssai].pion);
     char *color = malloc(sizeof(char) * LENGTHCOLOR); // Pour les reponses de l'utilisateur
 
-
     while (!isFull(joueur->proposition[numeroEssai].pion))
     {
         displayChoice(combinaison);
@@ -110,8 +109,6 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
         scanf(" %c", &playerAnswer);
     }
 
-
-
     if (checkLineContent(combinaison, &(joueur->proposition[numeroEssai])))
     {
         addLigneToFile(&(joueur->proposition[numeroEssai]));
@@ -150,8 +147,6 @@ void combinaisonInput(Couleur *combinaison, joueur *joueur)
                 printf("Choix de couleur : ROUGE, JAUNE, BLEU, ORANGE, VERT, BLANC, VIOLET, ROSE\n");
 
                 int position = 0;
-
-                displayChoice(combinaison);
 
                 printf("A quelle position souhaitez vous modifier la couleur ? Position : ");
                 scanf("%d", &position);
