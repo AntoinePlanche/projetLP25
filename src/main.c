@@ -86,7 +86,7 @@ int main()
                         }
 
 
-                        combinaisonInput(combinaisonSecret);
+                        combinaisonInput(combinaisonSecret, nouveauJoueur);
 
 
 
@@ -120,7 +120,7 @@ int main()
                     }
 
 
-                    combinaisonInput(combinaisonSecret);
+                    combinaisonInput(combinaisonSecret, nouveauJoueur);
 
 
                 }
