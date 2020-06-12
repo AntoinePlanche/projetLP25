@@ -11,6 +11,7 @@ int main()
 {
     // SI fichier est vide
     char choixReprendrePartie, str[100];
+    int numeroEssai = 0;
     DIR *d;
     struct dirent *dir;
     d = opendir("./Previous-Game");
@@ -52,7 +53,13 @@ int main()
                     {
 
                         findFileName();
-                        createGameFromFile(combinaisonSecret, *nouveauJoueur);
+
+                        nouveauJoueur->proposition = (ligne*)malloc(sizeof(ligne)*nombreEssais);
+
+                        nouveauJoueur->score = 0;
+                        createGameFromFile(combinaisonSecret, nouveauJoueur);
+                        numeroEssai = nombreEssais - essaisRestants;
+                        printf("numeroEssai = %i\n", numeroEssai);
 
                     } else {
 
@@ -80,6 +87,7 @@ int main()
 
 
                         combinaisonInput(combinaisonSecret);
+
 
 
 
@@ -114,6 +122,7 @@ int main()
 
                     combinaisonInput(combinaisonSecret);
 
+
                 }
 
 
@@ -123,11 +132,12 @@ int main()
 
 
 
-    for(int numeroEssai = 0; numeroEssai<nombreEssais; numeroEssai++)
+    for(numeroEssai; numeroEssai<nombreEssais; numeroEssai++)
     {
         playerInput(nouveauJoueur, combinaisonSecret, numeroEssai);
+
     }
-    remove(strcat("Previous-Game/",filename));
+    //remove(strcat("Previous-Game/",filename));
     printf("Dommage %s, vous avez perdu, n'hesitez pas a reessayer.\n",nouveauJoueur->nom);
 
 
