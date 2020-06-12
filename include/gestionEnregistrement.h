@@ -35,7 +35,7 @@ void *findFileName();
  *@param joueur
  *
  */
-void createGameFromFile(Couleur *combinaison, joueur joueur);
+void createGameFromFile(Couleur *combinaison, joueur *joueur);
 
 /**
  * @brief Cette fonction a pour objectif d'écrire la combinaison secrète sur la première ligne du fichier de sauvegarde
