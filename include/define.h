@@ -36,5 +36,8 @@ typedef struct joueur
 
 extern int nombreColonne;
 extern int nombreEssais;
+extern int essaisRestants;
+
+void process_field(int field_count, char *value);
 
 #endif // DEFINE_H_INCLUDED
