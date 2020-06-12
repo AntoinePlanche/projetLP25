@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../include/define.h"
-#include "../include/playerInput.h"
 #include <string.h>
 #define LINE_LEN 200
 
@@ -11,26 +10,6 @@ int nombreEssais;
 int playerLinesCount;
 
 Couleur getColorByIndex(int index);
-
-void addPropToGame(ligne *proposition, int i, int token)
-{
-
-    if (i == nombreEssais)
-    {
-        proposition->nbrBonneCouleurBonEndroit = token;
-        ASSERT_INT("proposition->nbrBonneCouleurBonEndroit", proposition->nbrBonneCouleurBonEndroit);
-    }
-    else if (i == nombreEssais + 1)
-    {
-        proposition->nbrBonneCouleurMauvaisEndroit = token;
-        ASSERT_INT("proposition->nbrBonneCouleurMauvaisEndroit", proposition->nbrBonneCouleurMauvaisEndroit);
-    }
-    else
-    {
-        proposition->pion[i] = getColorByIndex(token);
-        ASSERT_INT("proposition->pion", (Couleur)proposition->pion[i]);
-    }
-}
 
 Couleur getColorByIndex(int index)
 {
