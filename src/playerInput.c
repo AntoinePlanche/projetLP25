@@ -16,6 +16,7 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
     initalizePion(joueur->proposition[numeroEssai].pion);
     char *color = malloc(sizeof(char) * LENGTHCOLOR); // Pour les reponses de l'utilisateur
 
+
     while (!isFull(joueur->proposition[numeroEssai].pion))
     {
         displayChoice(combinaison);
@@ -109,7 +110,7 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
         scanf(" %c", &playerAnswer);
     }
 
-    // addLigneToFile(&(joueur->proposition[numeroEssai])); @ShoyenProd le probleme est plutot simple tu appelles add ligne avant d'avoir verifier le contenu de la ligne ce qu'il ce fait dans la condition qui suit donc il faut mettre les appels de fonction dans les conditions et ça fonctionne :)
+
 
     if (checkLineContent(combinaison, &(joueur->proposition[numeroEssai])))
     {
@@ -132,7 +133,7 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
  *
  * @param combinaison
  */
-void combinaisonInput(Couleur *combinaison)
+void combinaisonInput(Couleur *combinaison, joueur *joueur)
 {
 
     if (combinaison != NULL)
@@ -200,7 +201,7 @@ void combinaisonInput(Couleur *combinaison)
                 printf("Validez vous cette proposition (o/n) ");
                 scanf(" %c", &playerAnswer);
             }
-            combinaisonSecret(combinaison);
+            addFirstInfo(combinaison, joueur);
         }
 
         else
@@ -215,7 +216,7 @@ void combinaisonInput(Couleur *combinaison)
                 combinaison[i] = randomColor;
             }
 
-            combinaisonSecret(combinaison);
+            addFirstInfo(combinaison, joueur);
         }
     }
     else
