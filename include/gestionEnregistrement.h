@@ -42,7 +42,7 @@ void createGameFromFile(Couleur *combinaison, joueur *joueur);
  *
  * @param combinaison
  */
-void combinaisonSecret(Couleur *combinaison);
+void addFirstInfo(Couleur *combinaison, joueur *joueur);
 
 /**
  * @brief Correspond au nom du fichier donné par le joueur
