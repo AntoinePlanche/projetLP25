@@ -2,8 +2,8 @@
 #define LENGTHCOLOR 10
 #include "../include/gestionEnregistrement.h"
 
-int nombreEssais = 0;
-int nombreColonne = 0;
+int nombreEssais;
+int nombreColonne;
 char filename[100];
 
 /**
@@ -18,7 +18,6 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
 
     while (!isFull(joueur->proposition[numeroEssai].pion))
     {
-        displayChoice(combinaison);
         //system("cls"); //resp system("clear")
         printf("\n                   ***** tour numero : %i  *****\n\n", numeroEssai + 1);
         printf("\n                ***** %s a toi de jouer !*****\n\n", joueur->nom);
@@ -120,6 +119,7 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
     {
         addLigneToFile(&(joueur->proposition[numeroEssai]));
         printf("Dommage, vous n'avez pas trouvez la solution.\nVous avez %i couleur(s) bonne(s) mais mal place et %i couleur(s) bonne(s) et bien place(s)\n", joueur->proposition[numeroEssai].nbrBonneCouleurMauvaisEndroit, joueur->proposition[numeroEssai].nbrBonneCouleurBonEndroit);
+        playerLinesCount++;
     }
 }
 
@@ -439,11 +439,13 @@ bool modeChoice()
     if (playerAnswer == 1)
     {
         printf("Vous avez choisi le mode Joueur Vs Joueur\n");
+        system("clear");
         return true;
     }
     else
     {
         printf("Vous avez choisi le mode Joueur Vs Ordinateur\n");
+        system("clear");
         return false;
     }
 }
@@ -492,7 +494,7 @@ void numberColorChoice()
             scanf(" %d", &nombreColonne);
         } while (nombreColonne < 0);
 
-        printf("Est ce que %d colonnes vous convient ? (o/n)\n", nombreColonne);
+        printf("Est ce que %d colonnes vous convient ? (o/n) ", nombreColonne);
 
         do
         {
