@@ -17,6 +17,9 @@
 
 #define ASSERT_DATA(message, data) fprintf(stderr, __FILE__ ":%d: " message " = %s\n", __LINE__, data)
 
+#define ASSERT_WRONG_ANSWER(data) printf("| X %d |", data)
+#define ASSERT_GOOD_ANSWER(data) printf(" V %d ", data)
+
 typedef enum couleur
 {
     ROUGE,
