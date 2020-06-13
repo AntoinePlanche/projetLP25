@@ -5,6 +5,12 @@
 
 char filename[100];
 
+/**
+ * @brief Create a Game File
+ * 
+ * @param joueur 
+ * @param str 
+ */
 void createGameFile(joueur joueur, char *str)
 {
     FILE *fp;

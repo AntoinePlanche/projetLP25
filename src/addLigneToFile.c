@@ -3,9 +3,16 @@
 #include <string.h>
 #include "../include/gestionEnregistrement.h"
 
+// Name of the file
 char filename[100];
+// Number of columns
 int nombreColonne;
 
+/**
+ * @brief This method is used to add a line to the file 
+ * 
+ * @param proposition line which has to be stored in the file
+ */
 void addLigneToFile(ligne *proposition)
 {
 

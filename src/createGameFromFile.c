@@ -5,12 +5,17 @@
 #define LINE_LEN 200
 
 char filename[100];
-int essaisRestants;
 int nombreEssais;
 int playerLinesCount;
 
 Couleur getColorByIndex(int index);
 
+/**
+ * @brief Get the Color By Index
+ * 
+ * @param index 
+ * @return Couleur 
+ */
 Couleur getColorByIndex(int index)
 {
     switch (index)
@@ -46,6 +51,12 @@ Couleur getColorByIndex(int index)
     }
 }
 
+/**
+ * @brief Set the Game Parameters
+ * 
+ * @param line 
+ * @param joueur 
+ */
 void setGameParameters(char *line, joueur *joueur)
 {
     const char delimiter[2] = ";";
@@ -83,6 +94,12 @@ void setGameParameters(char *line, joueur *joueur)
     }
 }
 
+/**
+ * @brief Fill the secret combinaison from the line in the file
+ * 
+ * @param line 
+ * @param combinaison 
+ */
 void fillCombinaisonFromFile(char *line, Couleur *combinaison)
 {
     const char delimiter[2] = ";";
@@ -101,6 +118,12 @@ void fillCombinaisonFromFile(char *line, Couleur *combinaison)
     }
 }
 
+/**
+ * @brief Fill the line from the line in the file (Colors, wrond and good answer)
+ * 
+ * @param line 
+ * @param inputLine 
+ */
 void fillInputLine(char *line, ligne *inputLine)
 {
     const char delimiter[2] = ";";
@@ -131,6 +154,12 @@ void fillInputLine(char *line, ligne *inputLine)
     }
 }
 
+/**
+ * @brief Create a Game From File object
+ * 
+ * @param combinaison 
+ * @param player 
+ */
 void createGameFromFile(Couleur *combinaison, joueur *player)
 {
     char tampon[20];
@@ -161,6 +190,7 @@ void createGameFromFile(Couleur *combinaison, joueur *player)
                 setGameParameters(line, player);
                 player->proposition = (ligne *)malloc(sizeof(ligne) * nombreEssais);
 
+                // Allocation de l'espace memoire pour stocker les lignes possedant nombreColonne x Couleur
                 for (int i = 0; i < nombreEssais; i++)
                 {
                     player->proposition[i].pion = (Couleur *)malloc(sizeof(Couleur) * nombreColonne);

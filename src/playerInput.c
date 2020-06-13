@@ -503,6 +503,14 @@ void numberColorChoice()
     }
 }
 
+/**
+ * @brief This method is used to check if the given line is equal to the combinaison. If not, it gives the info of the line
+ * 
+ * @param targetLigne 
+ * @param input 
+ * @return true 
+ * @return false 
+ */
 bool checkLineContent(Couleur *targetLigne, ligne *input)
 {
 

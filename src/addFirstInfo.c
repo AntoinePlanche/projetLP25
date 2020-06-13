@@ -6,6 +6,12 @@
 char filename[100];
 int nombreColonne;
 
+/**
+ * @brief Cette methode permet d'ajouter au fichier tous les infos necessaires à la construction d'une partie 
+ * 
+ * @param combinaison Combinaison secrete
+ * @param joueur 
+ */
 void addFirstInfo(Couleur *combinaison, joueur *joueur)
 {
     FILE *fp;

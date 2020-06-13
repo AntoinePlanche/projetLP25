@@ -4,6 +4,11 @@
 #include <dirent.h>
 #include "../include/gestionEnregistrement.h"
 
+/**
+ * @brief This method is used to find File Name
+ * 
+ * @return void* 
+ */
 void *findFileName()
 {
 

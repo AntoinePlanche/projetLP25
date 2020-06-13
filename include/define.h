@@ -7,6 +7,7 @@
 #include <stdio.h>
 #define lengthName 20
 
+/** DEFINE MACROS **/
 #define TO_INT(x) atoi(x)
 
 #define RETURN printf("\n")
@@ -17,9 +18,10 @@
 
 #define ASSERT_DATA(message, data) fprintf(stderr, __FILE__ ":%d: " message " = %s\n", __LINE__, data)
 
-#define ASSERT_WRONG_ANSWER(data) printf("| X %d |", data)
-#define ASSERT_GOOD_ANSWER(data) printf(" V %d ", data)
-
+/**
+ * @brief All the color a cell can have 
+ * 
+ */
 typedef enum couleur
 {
     ROUGE,
@@ -33,15 +35,28 @@ typedef enum couleur
     NONE
 } Couleur;
 
+/**
+ * @brief This struct represents a line 
+ * 
+ */
 typedef struct ligne
 {
-    Couleur *pion; //on allouera dynamiquement en fonction de la taille de la ligne que propose l'utilisateur
+    Couleur *pion;
     int nbrBonneCouleurBonEndroit;
     int nbrBonneCouleurMauvaisEndroit;
 } ligne;
 
+/// Pointer of line
 typedef ligne *mastermind;
 
+/**
+ * @brief This struct represents a player 
+ * 
+ * This player has :
+ * - name
+ * - Pointer of line, then all the game is stored in the player proposition pointer 
+ * - score  
+ */
 typedef struct joueur
 {
     char nom[lengthName];
@@ -49,10 +64,12 @@ typedef struct joueur
     int score;
 } joueur;
 
+/// Number of column
 extern int nombreColonne;
+/// Number of trials
 extern int nombreEssais;
+/// Number of lines filled by the player
 extern int playerLinesCount;
-extern int essaisRestants;
 
 void process_field(int field_count, char *value);
 
