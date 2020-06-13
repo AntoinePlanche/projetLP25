@@ -9,9 +9,9 @@
 
 int main()
 {
+    system("clear");
     // SI fichier est vide
     char choixReprendrePartie, str[100];
-    int numeroEssai = 0;
     DIR *d;
     struct dirent *dir;
     d = opendir("./Previous-Game");
@@ -52,27 +52,12 @@ int main()
                 findFileName();
 
                 createGameFromFile(combinaisonSecret, nouveauJoueur);
-
-                numeroEssai = nombreEssais - essaisRestants;
-
-                printf("COMBINAISON : \n");
-                displayChoice(combinaisonSecret);
-
-                printf("ANCIENS CHOIX : \n");
-                for (int i = 0; i < playerLinesCount; i++)
-                {
-                    RETURN;
-                    ASSERT_INT("LIGNE N°", i);
-                    displayChoice(nouveauJoueur->proposition[i].pion);
-
-                    ASSERT_INT("MAUVAISE REPONSE", nouveauJoueur->proposition[i].nbrBonneCouleurMauvaisEndroit);
-
-                    ASSERT_INT("BON REPONSE", nouveauJoueur->proposition[i].nbrBonneCouleurBonEndroit);
-                }
             }
             else
             {
                 createGameFile(*nouveauJoueur, str);
+
+                playerLinesCount = 0;
 
                 nouveauJoueur->score = 0;
                 essaisNumberChoice();
@@ -127,8 +112,25 @@ int main()
         }
     }
 
-    for (int i = 0; i < nombreEssais; i++)
+    int initialPlayerCount = playerLinesCount;
+    for (int i = initialPlayerCount; i < nombreEssais; i++)
     {
+        if (playerLinesCount > 0)
+        {
+            system("clear");
+            printf("COMBINAISON : \n");
+            displayChoice(combinaisonSecret);
+            RETURN;
+            printf("ANCIENS CHOIX : \n");
+            for (int i = 0; i < playerLinesCount; i++)
+            {
+                printf("%i couleur(s) bonne(s) mais mal place et %i couleur(s) bonne(s) et bien place(s)\n", nouveauJoueur->proposition[i].nbrBonneCouleurMauvaisEndroit, nouveauJoueur->proposition[i].nbrBonneCouleurBonEndroit);
+
+                displayChoice(nouveauJoueur->proposition[i].pion);
+            }
+        }
+
+        printf("                NOMBRE D'ESSAIS RESTANT : %d\n", nombreEssais - i);
         playerInput(nouveauJoueur, combinaisonSecret, i);
     }
     //remove(strcat("Previous-Game/",filename));
