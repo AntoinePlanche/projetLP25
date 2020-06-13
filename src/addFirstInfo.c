@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include<string.h>
+#include <string.h>
 #include "../include/gestionEnregistrement.h"
 
 char filename[100];
 int nombreColonne;
 
-void addFirstInfo(Couleur *combinaison, joueur *joueur) {
+void addFirstInfo(Couleur *combinaison, joueur *joueur)
+{
     FILE *fp;
     fp = fopen(filename, "w+");
 
@@ -22,8 +23,6 @@ void addFirstInfo(Couleur *combinaison, joueur *joueur) {
         fprintf(fp, "%d", combinaison[i]);
         fprintf(fp, ";");
     }
-    fprintf(fp, "\n");
 
     fclose(fp);
-
 }
