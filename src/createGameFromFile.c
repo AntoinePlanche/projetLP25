@@ -159,7 +159,18 @@ void createGameFromFile(Couleur *combinaison, joueur *player)
             if (count == 0)
             {
                 setGameParameters(line, player);
-                player->proposition = malloc(sizeof(ligne) * nombreEssais);
+                player->proposition = (ligne *)malloc(sizeof(ligne) * nombreEssais);
+
+                for (int i = 0; i < nombreEssais; i++)
+                {
+                    player->proposition[i].pion = (Couleur *)malloc(sizeof(Couleur) * nombreColonne);
+
+                    if (player->proposition[i].pion == NULL)
+                    {
+                        printf("erreur d'allocation memoire\n");
+                        exit(1);
+                    }
+                }
             }
             else if (count == 1)
                 fillCombinaisonFromFile(line, combinaison);
@@ -178,6 +189,4 @@ void createGameFromFile(Couleur *combinaison, joueur *player)
             count++;
         }
     }
-
-    essaisRestants = nombreEssais - count + 2;
 }
