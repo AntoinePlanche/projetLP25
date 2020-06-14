@@ -44,11 +44,8 @@ void *findFileName()
 
             if (testCSVFile != NULL && strcmp(choixFile, dir->d_name) == 0)
             {
-                //printf("%i", strcmp(choixFile, dir->d_name));
-                //printf("%s\n", dir->d_name);
-
-                printf("Vous avez choisi de reprendre la partie %s !\n\n", dir->d_name);
                 strcpy(filename, dir->d_name);
+                printf("Vous avez choisi de reprendre la partie %s !\n\n", dir->d_name);
                 closedir(d);
                 return 0;
             }
@@ -74,11 +71,9 @@ void *findFileName()
 
                 if (testCSVFile != NULL && strcmp(choixFile, dir->d_name) == 0)
                 {
-                    //printf("%i", strcmp(choixFile, dir->d_name));
-                    //printf("%s\n", dir->d_name);
-
-                    printf("Vous avez choisi de reprendre la partie %s !\n\n", dir->d_name);
                     strcpy(filename, dir->d_name);
+                    printf("Vous avez choisi de reprendre la partie %s !\n\n", dir->d_name);
+
                     closedir(d);
                     return 0;
                 }
