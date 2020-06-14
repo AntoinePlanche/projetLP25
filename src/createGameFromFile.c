@@ -72,12 +72,12 @@ void setGameParameters(char *line, joueur *joueur)
         }
         if (i == 1)
         {
-            nombreColonne = atoi(token);
+            nombreColonne = TO_INT(token);
             ASSERT_INT("nombreColonne", nombreColonne);
         }
         if (i == 2)
         {
-            nombreEssais = atoi(token);
+            nombreEssais = TO_INT(token);
             ASSERT_INT("nombreEssais", nombreEssais);
 
             joueur->proposition = (ligne *)malloc(sizeof(ligne) * nombreEssais);
@@ -110,7 +110,7 @@ void fillCombinaisonFromFile(char *line, Couleur *combinaison)
     {
         if (i <= nombreColonne - 1)
         {
-            combinaison[i] = getColorByIndex(atoi(token));
+            combinaison[i] = getColorByIndex(TO_INT(token));
             ASSERT("COMBINAISON");
         }
         token = strtok(NULL, delimiter);
