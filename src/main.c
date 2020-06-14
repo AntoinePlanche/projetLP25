@@ -11,7 +11,7 @@ int main()
 {
     system(CLEAR);
     // SI fichier est vide
-    char choixReprendrePartie, str[100];
+    char choixReprendrePartie;
     DIR *d;
     struct dirent *dir;
     d = opendir("./Previous-Game");
@@ -20,6 +20,7 @@ int main()
     srand(time(NULL));
     joueur *nouveauJoueur = malloc(sizeof(joueur));
     printf("Bonjour, quel est votre nom ?\n");
+
     scanf("%s", nouveauJoueur->nom);
     Couleur *combinaisonSecret = (Couleur *)malloc(nombreColonne * sizeof(Couleur));
 
@@ -55,7 +56,7 @@ int main()
             }
             else
             {
-                createGameFile(*nouveauJoueur, str);
+                createGameFile(*nouveauJoueur);
 
                 playerLinesCount = 0;
 
@@ -86,7 +87,7 @@ int main()
         else
         {
 
-            createGameFile(*nouveauJoueur, str);
+            createGameFile(*nouveauJoueur);
 
             nouveauJoueur->score = 0;
             essaisNumberChoice();
