@@ -18,7 +18,6 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
 
     while (!isFull(joueur->proposition[numeroEssai].pion))
     {
-        //system("cls"); //resp system("clear")
         printf("\n                   ***** tour numero : %i  *****\n\n", numeroEssai + 1);
         printf("\n                ***** %s a toi de jouer !*****\n\n", joueur->nom);
         printf("Choix de couleur : ROUGE, JAUNE, BLEU, ORANGE, VERT, BLANC, VIOLET, ROSE / Position %d pour quitter\n\n", nombreColonne + 1);
@@ -142,7 +141,6 @@ void combinaisonInput(Couleur *combinaison, joueur *joueur)
 
             while (!isFull(combinaison))
             {
-                system("cls"); // resp system("clear");
                 printf("                ***** CHOIX DE LA COMBINAISON SECRETE *****\n\n");
                 printf("Choix de couleur : ROUGE, JAUNE, BLEU, ORANGE, VERT, BLANC, VIOLET, ROSE\n");
 
@@ -439,13 +437,13 @@ bool modeChoice()
     if (playerAnswer == 1)
     {
         printf("Vous avez choisi le mode Joueur Vs Joueur\n");
-        system("clear");
+        system(CLEAR);
         return true;
     }
     else
     {
         printf("Vous avez choisi le mode Joueur Vs Ordinateur\n");
-        system("clear");
+        system(CLEAR);
         return false;
     }
 }
