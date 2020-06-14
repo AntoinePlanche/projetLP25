@@ -46,6 +46,20 @@ void createGameFromFile(Couleur *combinaison, joueur *joueur);
 void addFirstInfo(Couleur *combinaison, joueur *joueur);
 
 /**
+ * @brief This method is used to delete a file
+ * 
+ * @return void permet de rappeller la fonction autant de fois que le joueur le souhaite ?
+ */
+void deleteFile();
+
+/**
+ * @brief This method is used to find File Name
+ * 
+ * @return void* 
+ */
+void *findFileName();
+
+/**
  * @brief Correspond au nom du fichier donné par le joueur
  *
  */
