@@ -118,8 +118,11 @@ int main()
         if (playerLinesCount > 0)
         {
             system(CLEAR);
+
+            //TODO delete when project done
             printf("COMBINAISON : \n");
             displayChoice(combinaisonSecret);
+
             RETURN;
             printf("ANCIENS CHOIX : \n");
             for (int i = 0; i < playerLinesCount; i++)
