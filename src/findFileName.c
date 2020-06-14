@@ -14,7 +14,7 @@ void deleteFile()
     DIR *d;
     struct dirent *dir;
     d = opendir("./Previous-Game");
-    char playerAnswer, choixFile[100], *testCSVFile, folder[20] = FOLDER_NAME;
+    char playerAnswer, choixFile[100], *testCSVFile, folder[100] = FOLDER_NAME;
 
     printf("Voulez vous supprimer un fichier ? (o/n)\n");
     scanf(" %c", &playerAnswer);
@@ -41,30 +41,21 @@ void deleteFile()
             closedir(d);
         }
 
-        d = opendir("./Previous-Game");
         bool testFind = false;
         printf("Quel fichier voulez-vous supprimer ?\n");
         scanf("%s", choixFile);
-        if (d)
-        {
-            while ((dir = readdir(d)) != NULL)
-            {
-                testCSVFile = strstr(dir->d_name, ".csv");
 
-                if (testCSVFile != NULL && strcmp(choixFile, dir->d_name) == 0)
-                {
-                    strcpy(filename, dir->d_name);
-                    closedir(d);
-                    remove(strcat(folder, filename));
-                    printf("Fichier supprimé \n");
-                    return deleteFile();
-                }
-                else
-                {
-                    testFind = true;
-                }
-            }
-            closedir(d);
+        int ret = remove(strcat(folder, choixFile));
+
+        if (ret == 0)
+        {
+            printf("Fichier supprimé \n");
+            return deleteFile();
+        }
+
+        else
+        {
+            testFind = true;
         }
 
         while (testFind)
@@ -72,28 +63,18 @@ void deleteFile()
             printf("Erreur ! Merci de saisir un nom de fichier correct !\n");
             printf("Quel fichier voulez-vous supprimer ?\n");
             scanf("%s", choixFile);
-            d = opendir("./Previous-Game");
-            if (d)
+
+            int ret = remove(strcat(folder, choixFile));
+
+            if (ret == 0)
             {
+                printf("Fichier supprimé \n");
+                return deleteFile();
+            }
 
-                while ((dir = readdir(d)) != NULL)
-                {
-                    testCSVFile = strstr(dir->d_name, ".csv");
-
-                    if (testCSVFile != NULL && strcmp(choixFile, dir->d_name) == 0)
-                    {
-                        strcpy(filename, dir->d_name);
-                        closedir(d);
-                        remove(strcat(folder, filename));
-                        printf("Fichier supprimé \n");
-                        return deleteFile();
-                    }
-                    else
-                    {
-                        testFind = true;
-                    }
-                }
-                closedir(d);
+            else
+            {
+                testFind = true;
             }
         }
     }
@@ -112,6 +93,8 @@ void *findFileName()
     d = opendir("./Previous-Game");
     char choixFile[100];
     char *testCSVFile;
+
+    deleteFile();
 
     printf("Voici la liste des fichiers de sauvegarde :\n");
     if (d)
