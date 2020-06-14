@@ -18,6 +18,10 @@
 
 #define ASSERT_DATA(message, data) fprintf(stderr, __FILE__ ":%d: " message " = %s\n", __LINE__, data)
 
+#define CLEAR "cls||clear"
+
+#define FOLDER_NAME "Previous-Game/"
+
 /**
  * @brief All the color a cell can have 
  * 
