@@ -14,7 +14,7 @@ char filename[100];
 void createGameFile(joueur joueur, char *str)
 {
     FILE *fp;
-    strcpy(filename, "Previous-Game/");
+    strcpy(filename, FOLDER_NAME);
     strcat(filename, strcat(joueur.nom, ".csv"));
 
     fp = fopen(filename, "r+");
@@ -23,7 +23,7 @@ void createGameFile(joueur joueur, char *str)
         fclose(fp);
         printf("Entrez un nom de fichier :");
         scanf("%s", str);
-        strcpy(filename, "Previous-Game/");
+        strcpy(filename, FOLDER_NAME);
         strcat(filename, strcat(str, ".csv"));
         fp = fopen(filename, "r+");
         while (fp != NULL)
@@ -32,7 +32,7 @@ void createGameFile(joueur joueur, char *str)
             printf("Veuillez saisir un nom de fichier disponible.");
             printf("\nEntrez un nom de fichier :");
             scanf("%s", str);
-            strcpy(filename, "Previous-Game/");
+            strcpy(filename, FOLDER_NAME);
             strcat(filename, strcat(str, ".csv"));
             printf("%s\n", filename);
             fp = fopen(filename, "r+");

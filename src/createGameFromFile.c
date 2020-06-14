@@ -163,7 +163,7 @@ void fillInputLine(char *line, ligne *inputLine)
 void createGameFromFile(Couleur *combinaison, joueur *player)
 {
     char tampon[20];
-    char tampon2[40] = "Previous-Game/";
+    char tampon2[40] = FOLDER_NAME;
     char line[LINE_LEN + 1];
     int count = 0;
 
