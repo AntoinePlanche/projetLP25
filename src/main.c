@@ -24,6 +24,8 @@ int main()
     scanf("%s", nouveauJoueur->nom);
     Couleur *combinaisonSecret = (Couleur *)malloc(nombreColonne * sizeof(Couleur));
 
+    deleteFile();
+
     if (d)
     {
         while ((dir = readdir(d)) != NULL)
