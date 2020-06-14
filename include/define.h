@@ -5,7 +5,10 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #include <stdio.h>
-#define lengthName 20
+
+#define LENGTH_NAME 20
+#define CLEAR "cls||clear"
+#define FOLDER_NAME "Previous-Game/"
 
 /** DEFINE MACROS **/
 #define TO_INT(x) atoi(x)
@@ -17,10 +20,6 @@
 #define ASSERT_INT(message, data) fprintf(stderr, __FILE__ ":%d: " message " = %d\n", __LINE__, data)
 
 #define ASSERT_DATA(message, data) fprintf(stderr, __FILE__ ":%d: " message " = %s\n", __LINE__, data)
-
-#define CLEAR "cls||clear"
-
-#define FOLDER_NAME "Previous-Game/"
 
 /**
  * @brief All the color a cell can have 
@@ -63,7 +62,7 @@ typedef ligne *mastermind;
  */
 typedef struct joueur
 {
-    char nom[lengthName];
+    char nom[LENGTH_NAME];
     mastermind proposition;
     int score;
 } joueur;
