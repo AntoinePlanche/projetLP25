@@ -172,6 +172,8 @@ void createGameFromFile(Couleur *combinaison, joueur *player)
     strcpy(tampon, filename);
     strcat(tampon2, tampon);
 
+    strcpy(filename, tampon2);
+
     ASSERT_DATA("NOM FICHIER", tampon2);
 
     FILE *fp = fopen(tampon2, "r");
