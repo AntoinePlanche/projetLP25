@@ -11,7 +11,8 @@
  * @brief Cette fonction permet au joueur de proposer une nouvelle ligne
  *
  * @param joueur
- * @param combinaison
+ * @param combinaison combinaison secrete que le joueur doit deviner
+ * @param numeroEssai n° de l'essai en cours
  */
 void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai);
 
@@ -27,7 +28,7 @@ void displayChoice(Couleur *proposition);
  *
  * @param choix
  */
-void initalizePion(Couleur* combinaison);
+void initalizePion(Couleur *combinaison);
 
 /**
  * @brief Cette fonction permet de savoir si la ligne est remplie ou non
@@ -36,7 +37,7 @@ void initalizePion(Couleur* combinaison);
  * @return true si la ligne est remplie
  * @return false si il y a des cases vides dans la ligne
  */
-bool isFull(Couleur* combinaison);
+bool isFull(Couleur *combinaison);
 
 /**
  * @brief Cette fonction permet de completer la ligne en fonction de la chaine de caractere representant la couleur donnée par le joueur
@@ -100,16 +101,5 @@ void combinaisonInput(Couleur *combinaison, joueur *joueur);
  * @return false
  */
 bool checkLineContent(Couleur *targetLigne, ligne *input);
-
-/**
- * @brief Cette fonction permet d'initialiser une strucure joueur
- *
- * @param targetLigne
- * @param input
- * @param lengthLine
- * @return true
- * @return false
- */
-
 
 #endif
