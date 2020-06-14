@@ -9,7 +9,7 @@
 
 int main()
 {
-    system("clear");
+    system(CLEAR);
     // SI fichier est vide
     char choixReprendrePartie, str[100];
     DIR *d;
@@ -117,7 +117,7 @@ int main()
     {
         if (playerLinesCount > 0)
         {
-            system("clear");
+            system(CLEAR);
             printf("COMBINAISON : \n");
             displayChoice(combinaisonSecret);
             RETURN;
