@@ -7,15 +7,14 @@
 /**
  * @brief This method is used to delete a file
  * 
- * @return void 
+ * @return void permet de rappeller la fonction autant de fois que le joueur le souhaite ?
  */
 void deleteFile()
 {
     DIR *d;
     struct dirent *dir;
     d = opendir("./Previous-Game");
-    char playerAnswer, choixFile[100], *testCSVFile, folder[20]= FOLDER_NAME;
-
+    char playerAnswer, choixFile[100], *testCSVFile, folder[20] = FOLDER_NAME;
 
     printf("Voulez vous supprimer un fichier ? (o/n)\n");
     scanf(" %c", &playerAnswer);
@@ -56,7 +55,7 @@ void deleteFile()
                 {
                     strcpy(filename, dir->d_name);
                     closedir(d);
-                    remove(strcat(folder,filename));
+                    remove(strcat(folder, filename));
                     printf("Fichier supprimé \n");
                     return deleteFile();
                 }
@@ -85,7 +84,7 @@ void deleteFile()
                     {
                         strcpy(filename, dir->d_name);
                         closedir(d);
-                        remove(strcat(folder,filename));
+                        remove(strcat(folder, filename));
                         printf("Fichier supprimé \n");
                         return deleteFile();
                     }
@@ -97,11 +96,8 @@ void deleteFile()
                 closedir(d);
             }
         }
-
     }
-    return 0;
 }
-
 
 /**
  * @brief This method is used to find File Name
