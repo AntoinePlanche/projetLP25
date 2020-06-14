@@ -14,7 +14,7 @@ void deleteFile()
     DIR *d;
     struct dirent *dir;
     d = opendir("./Previous-Game");
-    char playerAnswer, choixFile[100], *testCSVFile, folder[20]= "Previous-Game/";
+    char playerAnswer, choixFile[100], *testCSVFile, folder[20]= FOLDER_NAME;
 
 
     printf("Voulez vous supprimer un fichier ? (o/n)\n");
