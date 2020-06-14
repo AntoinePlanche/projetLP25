@@ -120,9 +120,9 @@ int main()
         {
             system(CLEAR);
 
-            //TODO delete when project done
-            printf("COMBINAISON : \n");
-            displayChoice(combinaisonSecret);
+            //delete comments if you want to see the combinaison
+            // printf("COMBINAISON : \n");
+            // displayChoice(combinaisonSecret);
 
             RETURN;
             printf("ANCIENS CHOIX : \n");
@@ -137,7 +137,7 @@ int main()
         printf("                NOMBRE D'ESSAIS RESTANT : %d\n", nombreEssais - i);
         playerInput(nouveauJoueur, combinaisonSecret, i);
     }
-    //remove(strcat("Previous-Game/",filename));
+
     printf("Dommage %s, vous avez perdu, n'hesitez pas a reessayer.\n", nouveauJoueur->nom);
 
     return 0;
