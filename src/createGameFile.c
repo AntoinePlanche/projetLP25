@@ -9,10 +9,10 @@ char filename[100];
  * @brief Create a Game File
  * 
  * @param joueur 
- * @param str 
  */
-void createGameFile(joueur joueur, char *str)
+void createGameFile(joueur joueur)
 {
+    char *str = malloc(sizeof(char));
     FILE *fp;
     strcpy(filename, FOLDER_NAME);
     strcat(filename, strcat(joueur.nom, ".csv"));
@@ -41,4 +41,6 @@ void createGameFile(joueur joueur, char *str)
     fclose(fp);
     fp = fopen(filename, "w+");
     fclose(fp);
+
+    free(str);
 }
