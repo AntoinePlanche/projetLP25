@@ -112,6 +112,7 @@ void playerInput(joueur *joueur, Couleur *combinaison, int numeroEssai)
         addLigneToFile(&(joueur->proposition[numeroEssai]));
         joueur->score = (nombreEssais - numeroEssai) * 50; // plus on met d'essai moins on gagne de score.
         printf("Felicitation, vous avez gagne avec un score de %i !!!\n", joueur->score);
+        remove(filename);
         exit(0);
     }
     else
