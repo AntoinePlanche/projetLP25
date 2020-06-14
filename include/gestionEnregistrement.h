@@ -10,29 +10,30 @@
  *
  * @param joueur
  *
- * @param str
  */
-void createGameFile(joueur joueur, char *str);
+void createGameFile(joueur joueur);
 
 /**
  * @brief Cette fonction a pour but d'ajouter au fichier crée préalablement la ligne que vient de rentrer le joueur ainsi que les nbrBonneCouleurBonEndroit et nbrBonneCouleurMauvaisEndroit.
  *
- * @param proposition
+ * @param proposition ligne proposée par le joueur 
  */
 void addLigneToFile(ligne *proposition);
 
 /**
- * @brief  Cette fonction a pour objectif de retrouver le nom du fichier dans le dossier Previous-Game.
+ * @brief Cette fonction a pour objectif de retrouver le nom du fichier dans le dossier Previous-Game.
  *
  */
 void *findFileName();
 
 /**
  * @brief Cette fonction a pour objectif de creer une nouvelle ligne objectif et d'afficher les anciennes decisions qui ont été prises par le joueur afin qu'il se retrouve dans le jeu.
+ * 
+ * Cette fonction permet également d'instantier la combinaison secrète et les anciennes lignes proposées par le joueur. 
  *
- *@param combinaison
+ *@param combinaison Combinaison secrete définit dans le main 
  *
- *@param joueur
+ *@param joueur joueur 
  *
  */
 void createGameFromFile(Couleur *combinaison, joueur *joueur);
