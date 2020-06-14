@@ -94,8 +94,6 @@ void *findFileName()
     char choixFile[100];
     char *testCSVFile;
 
-    deleteFile();
-
     printf("Voici la liste des fichiers de sauvegarde :\n");
     if (d)
     {
