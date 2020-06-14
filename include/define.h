@@ -74,6 +74,4 @@ extern int nombreEssais;
 /// Number of lines filled by the player
 extern int playerLinesCount;
 
-void process_field(int field_count, char *value);
-
 #endif // DEFINE_H_INCLUDED
