@@ -23,7 +23,7 @@ If none of them are installed you must have a look at http://www.mingw.org
 Then to launch the program it is quit simple you only have to do :
 
 ```
-Projet-LP25$ ./Mastermind
+ProjetLP25$ ./Mastermind
 ```
 
 ### How does it work ?
